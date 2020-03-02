@@ -1,0 +1,27 @@
+{
+  "sad": [
+    {
+      "Decomposition": "* sad",
+      "Recompositions": [
+        "Why are you * sad",
+        "Don't be sad"
+      ]
+    },
+    {
+      "Decomposition": "not sad",
+      "Recompositions": [
+        "Why aren't you sad",
+        "Be sad"
+      ]
+    }
+  ],
+  "happy": [
+    {
+      "Decomposition": "* happy",
+      "Recompositions": [
+        "Why are you happy",
+        "What is making you happy"
+      ]
+    }
+  ]
+}
