@@ -21,22 +21,43 @@ public class Eliza {
         //scanner to read user input
         Scanner scanner = new Scanner(System.in); 
         while (this.is_running) {
-                
-            while(scanner.hasNext()) {
-                String data = scanner.next();
-                System.out.println(data);
-                //keyword to exit
-                if (data.equals("exit")) {
-                    System.out.print("Goodbye!");
-                    //engine should stop running
-                    this.is_running = false;
-                    //exit while loop
-                    break;
-                }
-            }  
+            String tokens[] = scanner.nextLine().split(" ");
+            //if array is empty 
+            System.out.println(noKeywords(tokens));
         }
         //close the scanner
         scanner.close();
+    }
+
+    public static String noKeywords(String[] input){
+        //input: array
+        Map<String, String> replacementMap = new HashMap<String, String>();
+        replacementMap.put("I", "you");
+        replacementMap.put("me", "you");
+        replacementMap.put("your", "mine");
+        replacementMap.put("we", "you");
+        replacementMap.put("us", "you");
+        replacementMap.put("am", "are");
+        String result = "";
+        
+        for (int i = 0; i < input.length; i++) { 
+            // accessing each element of array 
+            if (replacementMap.containsKey(input[i])) {
+                result += replacementMap.get(input[i]);
+            } else {
+                result += input[i];
+            }
+            if (i < input.length - 1) {
+                result += " ";
+           }
+        }
+        result += "?";
+        String[] options = {"Could you explain that further?", "Would you like to go into more detail?", result};
+        
+        Random random = new Random();
+        int rand = random.nextInt(3);
+
+        return options[rand];
     }
 
     public static void keyWords() {
