@@ -1,14 +1,14 @@
 {
   "sad": [
     {
-      "Decomposition": "sad",
+      "Decomposition": "am sad",
       "Recompositions": [
         "Why are you sad",
         "Don't be sad"
       ]
     },
     {
-      "Decomposition": "not sad",
+      "Decomposition": "is sad",
       "Recompositions": [
         "Why aren't you sad",
         "Be sad"
@@ -19,8 +19,42 @@
     {
       "Decomposition": "happy",
       "Recompositions": [
-        "Why are you happy",
-        "What is making you happy"
+        "Why are you happy?",
+        "What is making you happy?"
+      ]
+    }
+  ],
+  "you": [
+    {
+      "Decomposition": "you are",
+      "Recompositions": [
+        "Let's talk about you instead.",
+        "Why don't we discuss you instead."
+      ]
+    }
+  ],
+  "sorry": [
+    {
+      "Decomposition": "am sorry",
+      "Recompositions": [
+        "Apologies aren't necessary.",
+        "Don't apologize."
+      ]
+    },
+    {
+      "Decomposition": "is sorry",
+      "Recompositions": [
+        "What do you think of the apology?",
+        "How does that make you feel?",
+        "What do you think of that?"
+      ]
+    }
+  ],
+  "remember": [
+    {
+      "Decomposition": "I remember",
+      "Recompositions": [
+        "Can you expand on that?"
       ]
     }
   ]
