@@ -26,7 +26,7 @@ public class Eliza {
         // scanner to read user input
         Scanner scanner = new Scanner(System.in);
         while (this.is_running) {
-            String output = scanner.nextLine();
+            String output = scanner.nextLine().toLowerCase();
             String tokens[] = preprocess(output).split(" ");
             // if there is no keyword in the input
             if (findPriority(tokens) == null) {
