@@ -26,7 +26,8 @@ public class Eliza {
         // scanner to read user input
         Scanner scanner = new Scanner(System.in);
         while (this.is_running) {
-            String tokens[] = scanner.nextLine().split(" ");
+            String output = scanner.nextLine();
+            String tokens[] = preprocess(output).split(" ");
             // if there is no keyword in the input
             if (findPriority(tokens) == null) {
                 System.out.println(noKeywords(tokens));
@@ -40,6 +41,25 @@ public class Eliza {
         }
         // close the scanner
         scanner.close();
+    }
+
+    public static String preprocess(String str) {
+        Map<String, String> preprocessMap = new HashMap<String, String>();
+        preprocessMap.put("I'm", "I am");
+        preprocessMap.put("you're", "you are");
+        preprocessMap.put("we've", "we have");
+        preprocessMap.put("she's", "she is");
+        preprocessMap.put("he's", "he is");
+        preprocessMap.put("they're", "they are");
+
+
+        //iterate through map 
+        for (Map.Entry mapElement : preprocessMap.entrySet()) { 
+            String key = (String)mapElement.getKey(); 
+
+            str = str.replaceAll(key, preprocessMap.get(key));
+        }
+        return str;
     }
 
     // reads in the jason file storing the decompositon and recomposition rules into
