@@ -119,10 +119,7 @@ public class Eliza {
 
         ArrayList<String> keywords = new ArrayList<String>();
         keywords.add("sad");
-        keywords.add("i");
         keywords.add("happy");
-        keywords.add("very");
-        keywords.add("am");
 
         // splits the string input up into an array of words
         // String[] wordArray = input.split("\\s+");
