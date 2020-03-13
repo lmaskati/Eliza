@@ -1,7 +1,6 @@
 import java.io.*;
 import java.util.*;
-import org.json.simple.JSONArray;
-import org.json.simple.JSONObject;
+import org.json.simple.*;
 import org.json.simple.parser.*;
 
 public class Eliza {
@@ -26,17 +25,30 @@ public class Eliza {
         // scanner to read user input
         Scanner scanner = new Scanner(System.in);
         while (this.is_running) {
-            String output = scanner.nextLine().toLowerCase();
-            String tokens[] = preprocess(output).split(" ");
-            // if there is no keyword in the input
-            if (findPriority(tokens) == null) {
+            // user's input as a string
+            String input = scanner.nextLine().toLowerCase();
+
+            // user's input as an array of words
+            String tokens[] = preprocess(input).split(" ");
+
+            // for every word in the array replace any further puncatuation not caught by
+            // the preprocess method with a blank space
+            for (String token : tokens)
+                token = token.replaceAll("[^\\w]", "");
+
+            // try and find a keyword in the user's input
+            JSONObject keyword = findKeyword(tokens);
+            
+            // if there are no keywords in the user's input
+            if (keyword == null) {
+                // call the no keywords method and print the output
                 System.out.println(noKeywords(tokens));
             } else { // if there is a keyword in the input
-                // get the best matching decomposition
-                JSONObject matchingDecomp = findDecomposition(findPriority(tokens), readInJson(), tokens);
+                // get the object of the best matching decomposition.
+                JSONObject bestDecomp = findDecomposition(keyword, input);
                 // and then pass it in to the choose recomposition method so a recomposition can
                 // be chosen and printed
-                System.out.println(chooseRecomposition(matchingDecomp));
+                System.out.println(chooseRecomposition(bestDecomp));
             }
         }
         // close the scanner
@@ -52,17 +64,17 @@ public class Eliza {
         preprocessMap.put("he's", "he is");
         preprocessMap.put("they're", "they are");
 
-
-        //iterate through map 
-        for (Map.Entry mapElement : preprocessMap.entrySet()) { 
-            String key = (String)mapElement.getKey(); 
+        // iterate through map
+        for (Map.Entry mapElement : preprocessMap.entrySet()) {
+            String key = (String) mapElement.getKey();
 
             str = str.replaceAll(key, preprocessMap.get(key));
         }
         return str;
     }
 
-    // reads in the jason file storing the decompositon and recomposition rules into
+    // reads in a JSON script file storing the decompositon and recomposition rules
+    // into
     // an object and then return the object
     public static Object readInJson() {
         try {
@@ -111,141 +123,81 @@ public class Eliza {
         return options[rand];
     }
 
-    // takes an input string and a list of keywords where the earlier an element
-    // appears in the list the higher its priority.
-    // then finds the highest priority word that is contained in the input string
-    // and returns it
-    public static String findPriority(String[] tokens) {
+    // returns highest priority keyword object included in the users input or
+    // returns a null object if the input contains no keywords
+    public static JSONObject findKeyword(String[] tokens) {
 
-        ArrayList<String> keywords = new ArrayList<String>();
-        keywords.add("sad");
-        keywords.add("happy");
+        // creating an array of keyword objects
+        JSONObject allJson = (JSONObject) readInJson();
+        JSONArray keywords = (JSONArray) allJson.get("keywords");
 
-        // splits the string input up into an array of words
-        // String[] wordArray = input.split("\\s+");
-
-        // removes punctuation and sets every word to lower case and then adds them to a
-        // set of words
-        String[] wordArray = new String[tokens.length];
-        for (int c = 0; c < tokens.length; c++) {
-            wordArray[c] = tokens[c];
-        }
-
+        // add every word to a set of words
         Set<String> wordSet = new HashSet<String>();
-        for (int c = 0; c < wordArray.length; c++) {
-            wordArray[c] = wordArray[c].replaceAll("[^\\w]", "");
-            wordArray[c] = wordArray[c].toLowerCase();
-            wordSet.add(wordArray[c]);
-        }
+        for (String word : tokens)
+            wordSet.add(word);
 
-        // checks to see if any of the words in the word set are in the keyword list and
-        // adds them to the map if they are
-        Map<String, Integer> wordPriority = new HashMap<String, Integer>();
+        // adds a keyword object plus its priority to the map if it is included in the
+        // set of words
+        Map<JSONObject, Integer> wordPriority = new HashMap<JSONObject, Integer>();
+
         for (int k = 0; k < keywords.size(); k++) {
-            for (int w = 0; w < wordSet.size(); w++) {
-                if (wordSet.contains(keywords.get(k)))
-                    wordPriority.put(keywords.get(k), k);
+            JSONObject keywordObj = (JSONObject) keywords.get(k);
+            String keywordStr = (String) keywordObj.get("keyword");
+            if (wordSet.contains(keywordStr)) {
+                wordPriority.put(keywordObj, k);
             }
         }
 
-        // finds the highest priority word from the map of words
+        // finds the highest priority keyword from the map of keywords
         int lowestPriority = -1;
-        String highestPriorityWord = null;
-        for (Map.Entry<String, Integer> entry : wordPriority.entrySet()) {
+        JSONObject highestPriorityKeyword = null;
+        for (Map.Entry<JSONObject, Integer> entry : wordPriority.entrySet()) {
             if (lowestPriority == -1) {
                 lowestPriority = entry.getValue();
-                highestPriorityWord = entry.getKey();
+                highestPriorityKeyword = entry.getKey();
             }
             if (lowestPriority > entry.getValue()) {
                 lowestPriority = entry.getValue();
-                highestPriorityWord = entry.getKey();
+                highestPriorityKeyword = entry.getKey();
             }
         }
 
         // will return null if none of the keywords are present in the input string
-        return highestPriorityWord;
+        return highestPriorityKeyword;
 
     }
 
     // finds the best matching decomposition for a keyword using the input and
-    // returns it
-    public static JSONObject findDecomposition(String keyword, Object allJson, String[] inputArray) {
+    // returns it (the longer the decompositon matched, the better the match is)
+    public static JSONObject findDecomposition(JSONObject keyword, String input) {
 
-        // make an array of all decompositions for a keyword
-        JSONObject keywordObj = (JSONObject) allJson;
-        JSONArray decompositionsArray = (JSONArray) keywordObj.get(keyword);
+        // get the array of all decomposition rules for a keyword
+        JSONArray decompositionsArray = (JSONArray) keyword.get("Decompositions");
 
-        // create an arrray of scores the same size as the decomposition array
-        Integer[] scoresArray = new Integer[decompositionsArray.size()];
-        Integer highestScore = 0;
-        Integer highestIndex = 0;
+        // find the longest decomposition rule that exists within the input string
+        String longestDecomp = "";
+        JSONObject longestDecompObj = null;
 
-        // loop through the decomposition array and get the decomposition rule and split
-        // it into an array
         for (int c = 0; c < decompositionsArray.size(); c++) {
             JSONObject decompositionObj = (JSONObject) decompositionsArray.get(c);
-            String decomposition = (String) decompositionObj.get("Decomposition");
-            String[] decompArray = decomposition.split("[ \t\n\r]");
-            // pass the user's input array of words and the decomposition rule array into
-            // the score decomposition method which returns a score which gets added to a
-            // scores array
-            scoresArray[c] = scoreDecomposition(inputArray, decompArray);
-        }
+            String decomposition = (String) decompositionObj.get("Rule");
 
-        // loops through the array of scores to find the highest score, and then store
-        // the location of the highest score in highest index
-        for (int c = 0; c < scoresArray.length; c++) {
-            if (scoresArray[c] > highestScore) {
-                highestScore = scoresArray[c];
-                highestIndex = c;
+            if (input.contains(decomposition) && decomposition.length() > longestDecomp.length()) {
+                longestDecompObj = (JSONObject) decompositionsArray.get(c);
+                longestDecomp = decomposition;
             }
         }
 
-        // store the object of the best matching decomposition and return it
-        JSONObject matchingDecomp = (JSONObject) decompositionsArray.get(highestIndex);
-        return matchingDecomp;
-
-    }
-
-    // scores a decomposition rule against the users input by matching words between
-    // the two arrays. 1 "score" for every word matched
-    public static Integer scoreDecomposition(String[] tokens, String[] decompArray) {
-
-        Integer score = 0;
-
-        // duplicating the users input array of words
-        String[] inputArray = new String[tokens.length];
-        for (int c = 0; c < tokens.length; c++) {
-            inputArray[c] = tokens[c];
-        }
-
-        // creating a set to store common words between the two arrays
-        Set<String> commonWordSet = new HashSet<String>();
-
-        // set every index in the input array to lower case and remove punctuation and
-        // then add every word to the set
-        for (int c = 0; c < inputArray.length; c++) {
-            inputArray[c] = inputArray[c].replaceAll("[^\\w]", "");
-            inputArray[c] = inputArray[c].toLowerCase();
-            commonWordSet.add(inputArray[c]);
-        }
-
-        // loop through the array of decomposition rule words and if the set contains a
-        // word in the rule, increment the score
-        for (int c = 0; c < decompArray.length; c++) {
-            if (commonWordSet.contains(decompArray[c])) {
-                score++;
-            }
-        }
-
-        // return this score
-        return score;
+        System.out.println(longestDecomp);
+        // return the object of the best matching decomposition rule
+        return longestDecompObj;
 
     }
 
     // given a decompositon rule, choose a recomposition rule at random and then
     // return it to be printed
     public static String chooseRecomposition(JSONObject matchingDecomp) {
+        // getting an array of recompositions
         JSONArray recompositions = (JSONArray) matchingDecomp.get("Recompositions");
 
         // creating a random number between 0 and the size of the array of
@@ -253,7 +205,7 @@ public class Eliza {
         Random rand = new Random();
         Integer randomIndex = rand.nextInt(recompositions.size());
 
-        // get the randomly chosen recomposition string and print it
+        // get the randomly chosen recomposition string and return it to be printed
         String recomposition = (String) recompositions.get(randomIndex);
         return recomposition;
 
