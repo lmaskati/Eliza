@@ -1,60 +1,103 @@
 {
-  "sad": [
+  "keywords": [
     {
-      "Decomposition": "am sad",
-      "Recompositions": [
-        "Why are you sad",
-        "Don't be sad"
+      "keyword": "sad",
+      "Decompositions": [
+        {
+          "Rule": "sad",
+          "Recompositions": [
+            "Are you sad?"
+          ]
+        },
+        {
+          "Rule": "am sad",
+          "Recompositions": [
+            "Why are you sad",
+            "Don't be sad"
+          ]
+        },
+        {
+          "Rule": "not sad",
+          "Recompositions": [
+            "Why aren't you sad",
+            "Be sad"
+          ]
+        }
       ]
     },
     {
-      "Decomposition": "is sad",
-      "Recompositions": [
-        "Why aren't you sad",
-        "Be sad"
-      ]
-    }
-  ],
-  "happy": [
-    {
-      "Decomposition": "happy",
-      "Recompositions": [
-        "Why are you happy?",
-        "What is making you happy?"
-      ]
-    }
-  ],
-  "you": [
-    {
-      "Decomposition": "you are",
-      "Recompositions": [
-        "Let's talk about you instead.",
-        "Why don't we discuss you instead."
-      ]
-    }
-  ],
-  "sorry": [
-    {
-      "Decomposition": "am sorry",
-      "Recompositions": [
-        "Apologies aren't necessary.",
-        "Don't apologize."
+      "keyword": "happy",
+      "Decompositions": [
+        {
+          "Rule": "happy",
+          "Recompositions": [
+            "Why are you happy",
+            "What is making you happy"
+          ]
+        }
       ]
     },
     {
-      "Decomposition": "is sorry",
-      "Recompositions": [
-        "What do you think of the apology?",
-        "How does that make you feel?",
-        "What do you think of that?"
+      "keyword": "you",
+      "Decompositions": [
+        {
+          "Rule": "you",
+          "Recompositions": [
+            "Let's talk about you instead.",
+            "Why don't we discuss you instead."
+          ]
+        },
+        {
+          "Rule": "you are",
+          "Recompositions": [
+            "Let's talk about you instead.",
+            "Why don't we discuss you instead."
+          ]
+        }
       ]
-    }
-  ],
-  "remember": [
+    },
     {
-      "Decomposition": "I remember",
-      "Recompositions": [
-        "Can you expand on that?"
+      "keyword": "sorry",
+      "Decompositions": [
+        {
+          "Rule": "sorry",
+          "Recompositions": [
+            "Apologies aren't necessary.",
+            "Don't apologise."
+          ]
+        },
+        {
+          "Rule": "am sorry",
+          "Recompositions": [
+            "Apologies aren't necessary.",
+            "Don't apologise."
+          ]
+        },
+        {
+          "Rule": "is sorry",
+          "Recompositions": [
+            "What do you think of the apology?",
+            "How does that make you feel?",
+            "What do you think of that?"
+          ]
+        }
+      ]
+    },
+    {
+      "keyword": "remember",
+      "Decompositions": [
+        {
+          "Rule": "remember",
+          "Recompositions": [
+            "Can you expand on that?"
+          ]
+        },
+        {
+          "Rule": "i remember",
+          "Recompositions": [
+            "Can you expand on that?"
+          ]
+        }
       ]
     }
   ]
