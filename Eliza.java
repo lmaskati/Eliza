@@ -38,7 +38,7 @@ public class Eliza {
 
             // try and find a keyword in the user's input
             JSONObject keyword = findKeyword(tokens);
-            
+
             // if there are no keywords in the user's input
             if (keyword == null) {
                 // call the no keywords method and print the output
@@ -188,7 +188,7 @@ public class Eliza {
             }
         }
 
-        System.out.println(longestDecomp);
+        System.out.println("\n FOR DEBUGGING - decomposition rule chosen is: " + longestDecomp + "\n");
         // return the object of the best matching decomposition rule
         return longestDecompObj;
 
