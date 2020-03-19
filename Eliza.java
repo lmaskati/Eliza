@@ -263,9 +263,7 @@ public class Eliza {
 
         }
 
-        recomposition = recomposition.replaceAll("\\*", replacement);
-
-        return recomposition;
+        return recomposition.replaceAll("\\*", replacement);
 
     }
 
