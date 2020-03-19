@@ -225,38 +225,37 @@ public class Eliza {
     public static String substituteWildcard(String recomposition, String[] words, JSONObject matchingDecomp) {
 
         String decompRule = (String) matchingDecomp.get("Rule");
-
-        String recompArray[] = decompRule.split(" ");
+        String decompArray[] = decompRule.split(" ");
 
         String replacement = "";
         Boolean replace = false;
 
-        if (recompArray[recompArray.length - 1].equals("*")) {
+        if (decompArray[decompArray.length - 1].equals("*")) {
 
             for (int c = 0; c < words.length; c++) {
 
-                if (replace){
+                if (replace) {
                     replacement = replacement + words[c];
-                    if(c < words.length - 1)
-                    replacement = replacement + " ";
+                    if (c < words.length - 1)
+                        replacement = replacement + " ";
                 }
 
-                if (words[c].equals(recompArray[recompArray.length - 2]) && replace == false)
+                if (words[c].equals(decompArray[decompArray.length - 2]) && replace == false)
                     replace = true;
 
             }
 
-        } else if (recompArray[0].equals("*")) {
+        } else if (decompArray[0].equals("*")) {
 
             for (int c = words.length - 1; c >= 0; c--) {
 
                 if (replace) {
-                    replacement = replacement + words[c] + " ";
-                    if(c > 0)
-                    replacement = replacement + " ";
+                    replacement = replacement + words[c];
+                    if (c > 0)
+                        replacement = replacement + " ";
                 }
 
-                if (words[c].equals(recompArray[1]) && replace == false) {
+                if (words[c].equals(decompArray[1]) && replace == false) {
                     replace = true;
                 }
 
