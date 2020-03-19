@@ -1,4 +1,5 @@
 import java.io.*;
+import java.math.MathContext;
 import java.util.*;
 import org.json.simple.*;
 import org.json.simple.parser.*;
@@ -25,16 +26,18 @@ public class Eliza {
         // scanner to read user input
         Scanner scanner = new Scanner(System.in);
         while (this.is_running) {
-            // user's input as a string
-            String input = scanner.nextLine().toLowerCase();
+            // takes in the user's input and sets it to lower case, removes all non letter
+            // characters and replaces double space with single space
+            String input = scanner.nextLine().toLowerCase().replaceAll("[^a-zA-Z ]", "").replaceAll("  ", " ");
 
             // user's input as an array of words
             String tokens[] = preprocess(input).split(" ");
 
-            // for every word in the array replace any further puncatuation not caught by
-            // the preprocess method with a blank space
+            // for every word in the array replace any further puncatuation or non letter
+            // characters not caught by
+            // the preprocess method
             for (String token : tokens)
-                token = token.replaceAll("[^\\w]", "");
+                token = token.replaceAll("[^a-zA-Z ]", "");
 
             // try and find a keyword in the user's input
             JSONObject keyword = findKeyword(tokens);
@@ -48,7 +51,7 @@ public class Eliza {
                 JSONObject bestDecomp = findDecomposition(keyword, input);
                 // and then pass it in to the choose recomposition method so a recomposition can
                 // be chosen and printed
-                System.out.println(chooseRecomposition(bestDecomp));
+                System.out.println(chooseRecomposition(bestDecomp, tokens));
             }
         }
         // close the scanner
@@ -74,8 +77,7 @@ public class Eliza {
     }
 
     // reads in a JSON script file storing the decompositon and recomposition rules
-    // into
-    // an object and then return the object
+    // into an object and then return the object
     public static Object readInJson() {
         try {
             FileReader reader = new FileReader("therapist.json");
@@ -182,7 +184,11 @@ public class Eliza {
             JSONObject decompositionObj = (JSONObject) decompositionsArray.get(c);
             String decomposition = (String) decompositionObj.get("Rule");
 
-            if (input.contains(decomposition) && decomposition.length() > longestDecomp.length()) {
+            Integer length = decomposition.length();
+            if (decomposition.contains("*") && input.length() >= decomposition.length())
+                length++;
+
+            if (input.contains(decomposition.replaceAll("\\*", "")) && length > longestDecomp.length()) {
                 longestDecompObj = (JSONObject) decompositionsArray.get(c);
                 longestDecomp = decomposition;
             }
@@ -196,7 +202,7 @@ public class Eliza {
 
     // given a decompositon rule, choose a recomposition rule at random and then
     // return it to be printed
-    public static String chooseRecomposition(JSONObject matchingDecomp) {
+    public static String chooseRecomposition(JSONObject matchingDecomp, String[] words) {
         // getting an array of recompositions
         JSONArray recompositions = (JSONArray) matchingDecomp.get("Recompositions");
 
@@ -207,6 +213,54 @@ public class Eliza {
 
         // get the randomly chosen recomposition string and return it to be printed
         String recomposition = (String) recompositions.get(randomIndex);
+
+        if (recomposition.contains("*")) {
+            recomposition = substituteWildcard(recomposition, words, matchingDecomp);
+        }
+
+        return recomposition;
+
+    }
+
+    public static String substituteWildcard(String recomposition, String[] words, JSONObject matchingDecomp) {
+
+        String decompRule = (String) matchingDecomp.get("Rule");
+
+        String recompArray[] = decompRule.split(" ");
+
+        String replacement = "";
+        Boolean replace = false;
+
+        if (recompArray[recompArray.length - 1].equals("*")) {
+
+            for (int c = 0; c < words.length; c++) {
+
+                if (replace)
+                    replacement = replacement + words[c];
+
+                if (words[c].equals(recompArray[recompArray.length - 2]) && replace == false)
+                    replace = true;
+
+            }
+            
+        } else if (recompArray[0].equals("*")) {
+
+            for (int c = words.length - 1; c >= 0; c--) {
+
+                if (replace) {
+                    replacement = replacement + words[c];
+                }
+
+                if (words[c].equals(recompArray[1]) && replace == false) {
+                    replace = true;
+                }
+
+            }
+
+        }
+
+        recomposition = recomposition.replaceAll("\\*", replacement);
+
         return recomposition;
 
     }
