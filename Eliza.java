@@ -235,20 +235,25 @@ public class Eliza {
 
             for (int c = 0; c < words.length; c++) {
 
-                if (replace)
+                if (replace){
                     replacement = replacement + words[c];
+                    if(c < words.length - 1)
+                    replacement = replacement + " ";
+                }
 
                 if (words[c].equals(recompArray[recompArray.length - 2]) && replace == false)
                     replace = true;
 
             }
-            
+
         } else if (recompArray[0].equals("*")) {
 
             for (int c = words.length - 1; c >= 0; c--) {
 
                 if (replace) {
-                    replacement = replacement + words[c];
+                    replacement = replacement + words[c] + " ";
+                    if(c > 0)
+                    replacement = replacement + " ";
                 }
 
                 if (words[c].equals(recompArray[1]) && replace == false) {
