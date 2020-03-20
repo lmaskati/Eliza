@@ -205,7 +205,7 @@
           "How does that make you feel?",
           "What do you think of that?"
           ]
-        },
+        }
       ]
     },
     {
@@ -244,7 +244,7 @@
             "Do you dream often?",
             "Why do you think you had this dream?"
           ]
-        },
+        }
       ]
     },
     {
@@ -257,7 +257,7 @@
             "Do you dream often?",
             "Really, *?"
           ]
-        },
+        }
       ]
     },
     {
@@ -270,7 +270,7 @@
             "Do you dream often?",
             "Really, *?"
           ]
-        },
+        }
       ]
     },
     {
@@ -283,7 +283,7 @@
             "Why the uncertain undertone?",
             "You aren't sure?"
           ]
-        },
+        }
       ]
     },
     {
@@ -307,7 +307,7 @@
           "Recompositions": [
             "Hi! What do you want to talk about?"
           ]
-        },
+        }
       ]
     },
     {
@@ -323,7 +323,7 @@
           ]
         }
       ]
-    }
+    },
     {
       "keyword": "computer",
       "Decompositions": [
@@ -333,7 +333,7 @@
             "Do computers worry you?",
             "Why do you mention computers?",
             "What do you think machines have to do with your problems?",
-            "What do you think about machines?"
+            "What do you think about machines?",
             "What about machines worry you?"
           ]
         }
