@@ -12,15 +12,22 @@
         {
           "Rule": "am sad",
           "Recompositions": [
-            "Why are you sad",
-            "Don't be sad"
+            "Why are you sad?",
+            "Don't be sad!"
           ]
         },
         {
-          "Rule": "not sad",
+          "Rule": "* is sad",
           "Recompositions": [
-            "Why aren't you sad",
-            "Be sad"
+            "What makes you think * is sad?",
+            "Could you elaborate on why * is sad?"
+          ]
+        },
+        {
+          "Rule": "* are sad",
+          "Recompositions": [
+            "What makes you think * are sad?",
+            "Could you elaborate on why * are sad?"
           ]
         }
       ]
@@ -29,10 +36,10 @@
       "keyword": "happy",
       "Decompositions": [
         {
-          "Rule": "happy",
+          "Rule": "am happy",
           "Recompositions": [
-            "Why are you happy",
-            "What is making you happy"
+             "I'm glad you're happy.",
+              "Being happy is good."
           ]
         }
       ]
@@ -46,12 +53,137 @@
             "Let's talk about you instead.",
             "Why don't we discuss you instead."
           ]
-        },
+        }
+      ]
+    },
+    {
+      "keyword": "brother",
+      "Decompositions": [
         {
-          "Rule": "you are",
+          "Rule": "brother",
           "Recompositions": [
-            "Let's talk about you instead.",
-            "Why don't we discuss you instead."
+            "Tell me more about your brother.",
+            "What is your relationship with your brother like?"
+          ]
+        }
+      ]
+    },
+    {
+      "keyword": "mother",
+      "Decompositions": [
+        {
+          "Rule": "mother",
+          "Recompositions": [
+            "Tell me more about your mother.",
+            "What is your relationship with your mother like?"
+          ]
+        }
+      ]
+    },
+    {
+      "keyword": "mom",
+      "Decompositions": [
+        {
+          "Rule": "mom",
+          "Recompositions": [
+            "Tell me more about your mom.",
+            "What is your relationship with your mom like?"
+          ]
+        }
+      ]
+    },
+    {
+      "keyword": "mum",
+      "Decompositions": [
+        {
+          "Rule": "mum",
+          "Recompositions": [
+            "Tell me more about your mum.",
+            "What is your relationship with your mum like?"
+          ]
+        }
+      ]
+    },
+    {
+      "keyword": "dad",
+      "Decompositions": [
+        {
+          "Rule": "dad",
+          "Recompositions": [
+            "Tell me more about your dad.",
+            "What is your relationship with your dad like?"
+          ]
+        }
+      ]
+    },
+    {
+      "keyword": "father",
+      "Decompositions": [
+        {
+          "Rule": "father",
+          "Recompositions": [
+            "Tell me more about your father.",
+            "What is your relationship with your father like?"
+          ]
+        }
+      ]
+    },
+    {
+      "keyword": "grandmother",
+      "Decompositions": [
+        {
+          "Rule": "grandmother",
+          "Recompositions": [
+            "Tell me more about your grandmother.",
+            "What is your relationship with your grandmother like?"
+          ]
+        }
+      ]
+    },
+    {
+      "keyword": "grandfather",
+      "Decompositions": [
+        {
+          "Rule": "grandfather",
+          "Recompositions": [
+            "Tell me more about your grandfather.",
+            "What is your relationship with your grandfather like?"
+          ]
+        }
+      ]
+    },
+    {
+      "keyword": "grandpa",
+      "Decompositions": [
+        {
+          "Rule": "grandpa",
+          "Recompositions": [
+            "Tell me more about your grandpa.",
+            "What is your relationship with your grandpa like?"
+          ]
+        }
+      ]
+    },
+    {
+      "keyword": "grandmother",
+      "Decompositions": [
+        {
+          "Rule": "grandmother",
+          "Recompositions": [
+            "Tell me more about your grandmother.",
+            "What is your relationship with your grandmother like?"
+          ]
+        }
+      ]
+    },
+    {
+      "keyword": "grandma",
+      "Decompositions": [
+        {
+          "Rule": "grandma",
+          "Recompositions": [
+            "Tell me more about your grandma.",
+            "What is your relationship with your grandma like?"
           ]
         }
       ]
@@ -59,13 +191,6 @@
     {
       "keyword": "sorry",
       "Decompositions": [
-        {
-          "Rule": "sorry",
-          "Recompositions": [
-            "Apologies aren't necessary.",
-            "Don't apologise."
-          ]
-        },
         {
           "Rule": "am sorry",
           "Recompositions": [
@@ -77,25 +202,139 @@
           "Rule": "is sorry",
           "Recompositions": [
             "What do you think of the apology?",
-            "How does that make you feel?",
-            "What do you think of that?"
+          "How does that make you feel?",
+          "What do you think of that?"
           ]
-        }
+        },
       ]
     },
     {
       "keyword": "remember",
       "Decompositions": [
         {
-          "Rule": "remember",
+          "Rule": "i remember *",
           "Recompositions": [
-            "Can you expand on that?"
+            "Can you expand on that?",
+            "Does thinking of * bring anything else to mind?",
+            "Whats else do you remember?",
+            "Why do you remember * just now?",
+            "What in the present situation reminds you of *?"
+          ]
+        }
+      ]
+    },
+    {
+      "keyword": "if",
+      "Decompositions": [
+        {
+          "Rule": "if *",
+          "Recompositions": [
+            "Do you think it is likely that *?"
+          ]
+        }
+      ]
+    },
+    {
+      "keyword": "dream",
+      "Decompositions": [
+        {
+          "Rule": "dream",
+          "Recompositions": [
+            "What does that dream suggest to you?",
+            "Do you dream often?",
+            "Why do you think you had this dream?"
           ]
         },
+      ]
+    },
+    {
+      "keyword": "dreamt",
+      "Decompositions": [
         {
-          "Rule": "i remember",
+          "Rule": "dreamt that *",
           "Recompositions": [
-            "Can you expand on that?"
+            "What does that dream suggest to you?",
+            "Do you dream often?",
+            "Really, *?"
+          ]
+        },
+      ]
+    },
+    {
+      "keyword": "dreamed",
+      "Decompositions": [
+        {
+          "Rule": "dreamed that *",
+          "Recompositions": [
+            "What does that dream suggest to you?",
+            "Do you dream often?",
+            "Really, *?"
+          ]
+        },
+      ]
+    },
+    {
+      "keyword": "perhaps",
+      "Decompositions": [
+        {
+          "Rule": "perhaps",
+          "Recompositions": [
+            "You don't seem quite certain?",
+            "Why the uncertain undertone?",
+            "You aren't sure?"
+          ]
+        },
+      ]
+    },
+    {
+      "keyword": "maybe",
+      "Decompositions": [
+        {
+          "Rule": "maybe",
+          "Recompositions": [
+            "You don't seem quite certain?",
+            "Why the uncertain undertone?",
+            "You aren't sure?"
+          ]
+        },
+      ]
+    },
+    {
+      "keyword": "hello",
+      "Decompositions": [
+        {
+          "Rule": "hello",
+          "Recompositions": [
+            "Hi! What do you want to talk about?"
+          ]
+        },
+      ]
+    },
+    {
+      "keyword": "always",
+      "Decompositions": [
+        {
+          "Rule": "always",
+          "Recompositions": [
+            "Can you think of a specific example?",
+            "When?",
+            "What incident are you thinking of?",
+            "Really, always?"
+          ]
+        }
+      ]
+    }
+    {
+      "keyword": "computer",
+      "Decompositions": [
+        {
+          "Rule": "computer",
+          "Recompositions": [
+            "Do computers worry you?",
+            "Why do you mention computers?",
+            "What do you think machines have to do with your problems?",
+            "What do you think about machines?"
+            "What about machines worry you?"
           ]
         }
       ]
