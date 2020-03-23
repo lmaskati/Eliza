@@ -1,10 +1,12 @@
 import java.io.*;
 import java.util.*;
+
 import org.json.simple.*;
 import org.json.simple.parser.*;
 
 public class Eliza {
     private boolean is_running;
+    private String script;
 
     public Eliza(boolean is_running) {
         this.is_running = true;
@@ -17,13 +19,40 @@ public class Eliza {
         engine.repl();
     }
 
+
     // read eval print loop, to process and respond to user input
     public void repl() {
+
+        //scanner to read user input
+        Scanner scanner = new Scanner(System.in);
+
+        //this of code gets the user to choose a script, if the user doesn't input the correct thing then it displays
+        //an error message and loops until they do
+        System.out.println("What version of Eliza would you like to speak to today, enter 1 for therapist or " +
+                "2 for tech support");
+        boolean validAnswer = false;
+        while (!validAnswer) {
+            switch (scanner.nextLine()) {
+                case "1":
+                    this.script = "therapist";
+                    validAnswer = true;
+                    break;
+                case "2":
+                    this.script = "tech support";
+                    validAnswer = true;
+                    break;
+                default:
+                    System.out.println("Invalid answer, Please only enter \"1\" or \"2\" ");
+            }
+
+        }
+
+        //chosen script message
+        System.out.println("You have chosen the " + this.script + " version of Eliza \n");
+
         // Welcome message
         System.out.println("Hi, I'm Eliza!");
-        // get user input
-        // scanner to read user input
-        Scanner scanner = new Scanner(System.in);
+
         while (this.is_running) {
             // takes in the user's input and sets it to lower case, removes all non letter
             // characters and replaces double space with single space
@@ -59,7 +88,8 @@ public class Eliza {
         scanner.close();
     }
 
-    public static String preprocess(String str) {
+
+    public String preprocess(String str) {
         Map<String, String> preprocessMap = new HashMap<>();
         preprocessMap.put("I'm", "I am");
         preprocessMap.put("you're", "you are");
@@ -69,8 +99,8 @@ public class Eliza {
         preprocessMap.put("they're", "they are");
 
         // iterate through map
-        for (Map.Entry mapElement : preprocessMap.entrySet()) {
-            String key = (String) mapElement.getKey();
+        for (Map.Entry<String, String> mapElement : preprocessMap.entrySet()) {
+            String key = mapElement.getKey();
 
             str = str.replaceAll(key, preprocessMap.get(key));
         }
@@ -79,9 +109,9 @@ public class Eliza {
 
     // reads in a JSON script file storing the decompositon and recomposition rules
     // into an object and then return the object
-    public static Object readInJson() {
+    public Object readInJson() {
         try {
-            FileReader reader = new FileReader("therapist.json");
+            FileReader reader = new FileReader(this.script + ".json");
             return new JSONParser().parse(reader);
         } catch (IOException | ParseException e) {
             e.printStackTrace();
@@ -89,7 +119,7 @@ public class Eliza {
         return new Object();
     }
 
-    public static String noKeywords(String[] input) {
+    public String noKeywords(String[] input) {
         // input: array
         Map<String, String> replacementMap = new HashMap<>();
         replacementMap.put("I", "you");
@@ -123,7 +153,7 @@ public class Eliza {
 
     // returns highest priority keyword object included in the users input or
     // returns a null object if the input contains no keywords
-    public static JSONObject findKeyword(String[] tokens) {
+    public JSONObject findKeyword(String[] tokens) {
 
         // creating an array of keyword objects
         JSONObject allJson = (JSONObject) readInJson();
@@ -165,7 +195,7 @@ public class Eliza {
 
     // finds the best matching decomposition for a keyword using the input and
     // returns it (the longer the decompositon matched, the better the match is)
-    public static JSONObject findDecomposition(JSONObject keyword, String input) {
+    public JSONObject findDecomposition(JSONObject keyword, String input) {
 
         // get the array of all decomposition rules for a keyword
         JSONArray decompositionsArray = (JSONArray) keyword.get("Decompositions");
@@ -198,7 +228,7 @@ public class Eliza {
 
     // given a decompositon rule, choose a recomposition rule at random and then
     // return it to be printed
-    public static String chooseRecomposition(JSONObject matchingDecomp, String[] words) {
+    public String chooseRecomposition(JSONObject matchingDecomp, String[] words) {
         // getting an array of recompositions
         JSONArray recompositions = (JSONArray) matchingDecomp.get("Recompositions");
 
@@ -222,14 +252,14 @@ public class Eliza {
 
     //method substitutes the wildcard (*) at either the start or the end of the decomposition rule with the
     //relevant text that the user input
-    public static String substituteWildcard(String recomposition, String[] words, JSONObject matchingDecomp) {
+    public String substituteWildcard(String recomposition, String[] words, JSONObject matchingDecomp) {
 
         //get the decomposition rule and split it into an array of words
         String decompRule = (String) matchingDecomp.get("Rule");
         String[] decompArray = decompRule.split(" ");
 
         //replacement string will hold the words that are being put in place of the wildcard in the recomposition rule
-        String replacement = "";
+        StringBuilder replacement = new StringBuilder();
         boolean replace = false;
 
         //if the wildcard is at the end of the decomposition rule
@@ -241,10 +271,10 @@ public class Eliza {
                 //if replace is true
                 if (replace) {
                     //then add the current word to the replacement string
-                    replacement += words[c];
+                    replacement.append(words[c]);
                     //if the loop isn't on the last word in the array then add a space too
                     if (c < words.length - 1)
-                        replacement += " ";
+                        replacement.append(" ");
                 }
                 //find where the word next to the wildcard appears in the word array and if replace is false, then
                 //set it to true so subsequent words can be added to the replacement string.
@@ -262,10 +292,10 @@ public class Eliza {
                 //if replace is true
                 if (replace) {
                     //then add the current word to the replacement string
-                    replacement += words[c];
+                    replacement.append(words[c]);
                     //if the loop isn't on the first word in the array then add a space too
                     if (c > 0)
-                        replacement += " ";
+                        replacement.append(" ");
                 }
                 //find where the word next to the wildcard appears in the word array and if replace is false, then
                 //set it to true so subsequent words can be added to the replacement string.
@@ -278,7 +308,7 @@ public class Eliza {
         }
 
         //return the recomposition rule and replace the wildcard with the replacement string
-        return recomposition.replaceAll("\\*", replacement);
+        return recomposition.replaceAll("\\*", replacement.toString());
 
     }
 
