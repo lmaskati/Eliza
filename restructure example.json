@@ -25,14 +25,19 @@
     },
     {
       "keyword": [
-        "help"
+        "like"
       ],
       "Decompositions": [
         {
           "Rule": "$",
           "Recompositions": [
-            "How can i $?",
-            "Do you need $?"
+            "What do you $?"
+          ]
+        },
+        {
+          "Rule": "$ my *",
+          "Recompositions": [
+            "Why do you $ your *?"
           ]
         }
       ]
