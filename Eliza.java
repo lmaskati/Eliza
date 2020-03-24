@@ -83,6 +83,8 @@ public class Eliza {
                 // be chosen and printed
                 System.out.println(chooseRecomposition(bestDecomp, tokens));
             }
+
+            
         }
         // close the scanner
         scanner.close();
@@ -91,9 +93,11 @@ public class Eliza {
 
     public String preprocess(String str) {
         Map<String, String> preprocessMap = new HashMap<>();
-        preprocessMap.put("I'm", "I am");
+        preprocessMap.put("i'm", "i am");
         preprocessMap.put("you're", "you are");
+        preprocessMap.put("you've", "you have");
         preprocessMap.put("we've", "we have");
+        preprocessMap.put("we're", "we are");
         preprocessMap.put("she's", "she is");
         preprocessMap.put("he's", "he is");
         preprocessMap.put("they're", "they are");
@@ -119,10 +123,10 @@ public class Eliza {
         return new Object();
     }
 
-    public String noKeywords(String[] input) {
+    public String secondPerson(String[] input) {
         // input: array
         Map<String, String> replacementMap = new HashMap<>();
-        replacementMap.put("I", "you");
+        replacementMap.put("i", "you");
         replacementMap.put("me", "you");
         replacementMap.put("your", "mine");
         replacementMap.put("we", "you");
@@ -141,9 +145,15 @@ public class Eliza {
                 result.append(" ");
             }
         }
-        result.append("?");
+        return result.toString();
+
+    } 
+
+    public String noKeywords(String[] input) {
+        String result = secondPerson(input);
+        result = result + ("?");
         String[] options = {"Could you explain that further?", "Would you like to go into more detail?",
-                result.toString()};
+                result};
 
         Random random = new Random();
         int rand = random.nextInt(3);
@@ -307,8 +317,10 @@ public class Eliza {
 
         }
 
+        //convert to second person
+        String toReplace = secondPerson(replacement.toString().split(" "));
         //return the recomposition rule and replace the wildcard with the replacement string
-        return recomposition.replaceAll("\\*", replacement.toString());
+        return recomposition.replaceAll("\\*", toReplace);
 
     }
 
