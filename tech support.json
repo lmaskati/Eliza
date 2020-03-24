@@ -1,0 +1,128 @@
+{
+  "keywords": [
+    {
+      "keyword": "help",
+      "Decompositions": [
+        {
+          "Rule": "help",
+          "Recompositions": [
+            "Do you need help?"
+          ]
+        },
+        {
+          "Rule": "help me",
+          "Recompositions": [
+            "What can I help you with?",
+            "How can I help?",
+            "What are you having trouble with?"
+          ]
+        }
+      ]
+    },
+    {
+      "keyword": "broken",
+      "Decompositions": [
+        {
+          "Rule": "broken",
+          "Recompositions": [
+            "What is broken?",
+            "Is something broken?"
+          ]
+        },
+        {
+          "Rule": "* is broken",
+          "Recompositions": [
+            "How is your * broken?"
+          ]
+        }
+      ]
+    },
+    {
+      "keyword": "computer",
+      "Decompositions": [
+        {
+          "Rule": "computer",
+          "Recompositions": [
+            "What kind of computer do you have?",
+            "Is there a problem with your computer?",
+            "What make is your computer?"
+          ]
+        }
+      ]
+    },
+    {
+      "keyword": "laptop",
+      "Decompositions": [],
+      "Rule": "laptop",
+      "Recompositons": [
+        "What kind of laptop do you have? Is there a problem with your laptop?",
+        "What make is your laptop?"
+      ]
+    },
+    {
+      "keyword": "phone",
+      "Decompositions": [
+        {
+          "Rule": "phone",
+          "Recompositions": [
+            "What kind of phone do you have?",
+            "Is there a problem with your phone?",
+            "What make is your phone?"
+          ]
+        }
+      ]
+    },
+    {
+      "keyword": "google",
+      "Decompositions": [
+        {
+          "Rule": "google",
+          "Recompositions": [
+            "Did Google help with your problem?",
+            "What did google say?"
+          ]
+        }
+      ]
+    },
+    {
+      "keyword": "screen",
+      "Decompositions": [
+        {
+          "Rule": "screen",
+          "Recompositions": [
+            "Is your screen broken?"
+          ]
+        },
+        {
+          "Rule": "screen is broken",
+          "Recompositions": [
+            "Should you trye"
+          ]
+        }
+      ]
+    },
+    {
+      "keyword": "problem",
+      "Decompositions": [
+        {
+          "Rule": "problem",
+          "Recompositions": [
+            "What do you have a problem with?",
+            "What is your problem?"
+          ]
+        }
+      ]
+    },
+    {
+      "keyword": "my",
+      "Decompositions": [
+        {
+          "Rule": "my *",
+          "Recompositions": [
+            "Is there a problem with your *?"
+          ]
+        }
+      ]
+    }
+  ]
+}
