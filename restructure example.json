@@ -1,0 +1,41 @@
+{
+  "keywords": [
+    {
+      "keyword": [
+        "computer",
+        "phone",
+        "laptop"
+      ],
+      "Decompositions": [
+        {
+          "Rule": "$",
+          "Recompositions": [
+            "What brand is your $?",
+            "Is there something wrong with your $?"
+          ]
+        },
+        {
+          "Rule": "$ is broken",
+          "Recompositions": [
+            "How is your $ broken?",
+            "When did your $ break?"
+          ]
+        }
+      ]
+    },
+    {
+      "keyword": [
+        "help"
+      ],
+      "Decompositions": [
+        {
+          "Rule": "$",
+          "Recompositions": [
+            "How can i $?",
+            "Do you need $?"
+          ]
+        }
+      ]
+    }
+  ]
+}
