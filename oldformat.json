@@ -1,139 +1,39 @@
 {
-  "sad": [
+  "keywords": [
     {
-      "Decomposition": "am sad",
-      "Recompositions": [
-        "Why are you sad?",
-        "Don't be sad!"
+      "keyword": [
+        "computer",
+        "phone",
+        "laptop"
+      ],
+      "Decompositions": [
+        {
+          "Rule": "$",
+          "Recompositions": [
+            "What brand is your $?",
+            "Is there something wrong with your $?"
+          ]
+        },
+        {
+          "Rule": "$ is broken",
+          "Recompositions": [
+            "How is your $ broken?",
+            "When did your $ break?"
+          ]
+        }
       ]
     },
     {
-      "Decomposition": "* is sad",
-      "Recompositions": [
-        "What makes you think * is sad?",
-        "Could you elaborate on why * is sad?"
-      ]
-    },
-    {
-      "Decomposition": "* are sad",
-      "Recompositions": [
-        "What makes you think * are sad?",
-        "Could you elaborate on why * are sad?"
-      ]
-    }
-  ],
-  "happy": [
-    {
-      "Decomposition": "am happy",
-      "Recompositions": [
-        "I'm glad you're happy.",
-        "Being happy is good."
-      ]
-    }
-  ],
-  "you": [
-    {
-      "Decomposition": "you are",
-      "Recompositions": [
-        "Let's talk about you instead.",
-        "Why don't we discuss you instead."
-      ]
-    }
-  ],
-  "brother": [
-    {
-      "Decomposition": "brother",
-      "Recompositions": [
-        "Tell me more about your brother.",
-        "What is your relationship with your brother like?"
-      ]
-    }
-  ],
-  "mother": [
-    {
-      "Decomposition": "mother",
-      "Recompositions": [
-        "Tell me more about your mother.",
-        "What is your relationship with your mother like?"
-      ]
-    }
-  ],
-  "sister": [
-    {
-      "Decomposition": "sister",
-      "Recompositions": [
-        "Tell me more about your sister.",
-        "What is your relationship with your sister like?"
-      ]
-    }
-  ],
-  "father": [
-    {
-      "Decomposition": "father",
-      "Recompositions": [
-        "Tell me more about your father.",
-        "What is your relationship with your father like?"
-      ]
-    }
-  ],
-  "girlfriend": [
-    {
-      "Decomposition": "girlfriend",
-      "Recompositions": [
-        "Tell me more about your girlfriend.",
-        "What is your relationship with your girlfriend like?"
-      ]
-    }
-  ],
-  "boyfriend": [
-    {
-      "Decomposition": "boyfriend",
-      "Recompositions": [
-        "Tell me more about your boyfriend.",
-        "What is your relationship with your boyfriend like?"
-      ]
-    }
-  ],
-  "grandmother": [
-    {
-      "Decomposition": "grandmother",
-      "Recompositions": [
-        "Tell me more about your grandmother.",
-        "What is your relationship with your grandmother like?"
-      ]
-    }
-  ],
-  "grandfather": [
-    {
-      "Decomposition": "grandfather",
-      "Recompositions": [
-        "Tell me more about your grandfather.",
-        "What is your relationship with your grandfather like?"
-      ]
-    }
-  ],
-  "sorry": [
-    {
-      "Decomposition": "am sorry",
-      "Recompositions": [
-        "Apologies aren't necessary.",
-        "Don't apologize."
-      ]
-    },
-    {
-      "Decomposition": "is sorry",
-      "Recompositions": [
-        "What do you think of the apology?",
-        "How does that make you feel?",
-        "What do you think of that?"
-      ]
-    }
-  ],
-  "remember": [
-    {
-      "Decomposition": "I remember",
-      "Recompositions": [
-        "Can you expand on that?"
+      "keyword": [
+        "like"
+      ],
+      "Decompositions": [
+        {
+          "Rule": "$ my *",
+          "Recompositions": [
+            "Why do you $ your *?"
+          ]
+        }
       ]
     }
   ]
