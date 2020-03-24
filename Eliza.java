@@ -84,6 +84,12 @@ public class Eliza {
                 System.out.println(chooseRecomposition(bestDecomp, tokens));
             }
 
+            if (keyword != null) {
+                String keyString = (String) keyword.get("keyword");
+                if (keyString.equals("bye")) {
+                    this.is_running = false;
+                }
+            }
             
         }
         // close the scanner
