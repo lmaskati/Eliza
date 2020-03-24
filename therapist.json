@@ -1,6 +1,39 @@
 {
   "keywords": [
     {
+      "keyword": "bye",
+      "Decompositions": [
+        {
+          "Rule": "bye",
+          "Recompositions": [
+            "Goodbye! Thanks for chatting!"
+          ]
+        }
+      ]
+    },
+    {
+      "keyword": "goodbye",
+      "Decompositions": [
+        {
+          "Rule": "goodbye",
+          "Recompositions": [
+            "Goodbye! Thanks for chatting!"
+          ]
+        }
+      ]
+    },
+    {
+      "keyword": "exit",
+      "Decompositions": [
+        {
+          "Rule": "exit",
+          "Recompositions": [
+            "Goodbye! Thanks for chatting!"
+          ]
+        }
+      ]
+    },
+    {
       "keyword": "sad",
       "Decompositions": [
         {
