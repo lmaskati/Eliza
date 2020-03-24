@@ -78,6 +78,19 @@
       ]
     },
     {
+      "keyword": "am",
+      "Decompositions": [
+        {
+          "Rule": "i am *",
+          "Recompositions": [
+             "Is it because you are * that you came to me?",
+              "How long have you been *?",
+              "Do you believe it is normal to be *?"
+          ]
+        }
+      ]
+    },
+    {
       "keyword": "you",
       "Decompositions": [
         {
@@ -87,6 +100,56 @@
             "Why don't we discuss you instead."
           ]
         }
+      ]
+    },
+    {
+      "keyword": "like",
+      "Decompositions": [
+        {
+          "Rule": "are like",
+          "Recompositions": [
+            "In what way?",
+            "What resemblance do you see?",
+            "What do you suppose that resemblance means?",
+            "What other connections do you see?",
+            "What is the connection, do you suppose?",
+            "Could there really be some connection?"
+          ]
+        },
+        {
+          "Rule": "am like",
+          "Recompositions": [
+            "In what way?",
+            "What resemblance do you see?",
+            "What do you suppose that resemblance means?",
+            "What other connections do you see?",
+            "What is the connection, do you suppose?",
+            "Could there really be some connection?"
+          ]
+        },
+        {
+          "Rule": "is like",
+          "Recompositions": [
+            "In what way?",
+            "What resemblance do you see?",
+            "What do you suppose that resemblance means?",
+            "What other connections do you see?",
+            "What is the connection, do you suppose?",
+            "Could there really be some connection?"
+          ]
+        },
+        {
+          "Rule": "was like",
+          "Recompositions": [
+            "In what way?",
+            "What resemblance do you see?",
+            "What do you suppose that resemblance means?",
+            "What other connections do you see?",
+            "What is the connection, do you suppose?",
+            "Could there really be some connection?"
+          ]
+        }
+
       ]
     },
     {
@@ -253,6 +316,14 @@
             "Why do you remember * just now?",
             "What in the present situation reminds you of *?"
           ]
+        },
+        {
+          "Rule": "you remember *",
+          "Recompositions": [
+            "Why do you think I should recall * now?",
+            "Why do you think I should remember *?",
+            "Did you think I would forget *?",
+          ]
         }
       ]
     },
@@ -262,7 +333,8 @@
         {
           "Rule": "if *",
           "Recompositions": [
-            "Do you think it is likely that *?"
+            "Do you think it is likely that *?",
+            "Do you wish that *?"
           ]
         }
       ]
@@ -275,7 +347,9 @@
           "Recompositions": [
             "What does that dream suggest to you?",
             "Do you dream often?",
-            "Why do you think you had this dream?"
+            "Why do you think you had this dream?",
+            "Don't you believe that dream had something to do with your problem?",
+            "What persons appear in your dreams?"
           ]
         }
       ]
@@ -295,6 +369,19 @@
     },
     {
       "keyword": "dreamed",
+      "Decompositions": [
+        {
+          "Rule": "dreamed that *",
+          "Recompositions": [
+            "What does that dream suggest to you?",
+            "Do you dream often?",
+            "Really, *?"
+          ]
+        }
+      ]
+    },
+    {
+      "keyword": "feel",
       "Decompositions": [
         {
           "Rule": "dreamed that *",
