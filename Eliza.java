@@ -51,37 +51,31 @@ public class Eliza {
         System.out.println("You have chosen the " + this.script + " version of Eliza \n");
 
         // Welcome message
-        System.out.println("Hi, I'm Eliza!");
+        System.out.println(">> Hi, I'm Eliza! What's your problem today?");
 
         while (this.is_running) {
             // takes in the user's input and sets it to lower case, removes all non letter
             // characters and replaces double space with single space
-            String input = scanner.nextLine().toLowerCase().replaceAll("[^a-zA-Z ]", "")
-                    .replaceAll(" {2}", " ");
-
+            String input = scanner.nextLine().toLowerCase();
+            input = preprocess(input).replaceAll("[^a-zA-Z ]", "").replaceAll(" {2}", " ");
             // user's input as an array of words
-            String[] tokens = preprocess(input).split(" ");
-
-            // for every word in the array replace any further punctuation or non letter
-            // characters not caught by
-            // the preprocess method
-            for (String token : tokens) {
-                token = token.replaceAll("[^a-zA-Z ]", "");
-            }
+            String[] tokens = input.split(" ");
 
             // try and find a keyword in the user's input
             JSONObject keyword = findKeyword(tokens);
 
+
             // if there are no keywords in the user's input
             if (keyword == null) {
                 // call the no keywords method and print the output
-                System.out.println(noKeywords(tokens));
+                System.out.println(">> " + noKeywords(tokens));
             } else { // if there is a keyword in the input
                 // get the object of the best matching decomposition.
-                JSONObject bestDecomp = findDecomposition(keyword, input);
+                JSONObject bestDecomp = findDecomposition(keyword, input);                
                 // and then pass it in to the choose recomposition method so a recomposition can
                 // be chosen and printed
-                System.out.println(chooseRecomposition(bestDecomp, tokens));
+
+                System.out.println(">> " + chooseRecomposition(bestDecomp, tokens));
             }
 
             if (keyword != null) {
@@ -107,6 +101,7 @@ public class Eliza {
         preprocessMap.put("she's", "she is");
         preprocessMap.put("he's", "he is");
         preprocessMap.put("they're", "they are");
+        preprocessMap.put("they've", "they have");
 
         // iterate through map
         for (Map.Entry<String, String> mapElement : preprocessMap.entrySet()) {
@@ -138,6 +133,7 @@ public class Eliza {
         replacementMap.put("we", "you");
         replacementMap.put("us", "you");
         replacementMap.put("am", "are");
+        replacementMap.put("my", "your");
         StringBuilder result = new StringBuilder();
 
         for (int i = 0; i < input.length; i++) {
@@ -246,6 +242,7 @@ public class Eliza {
     // return it to be printed
     public String chooseRecomposition(JSONObject matchingDecomp, String[] words) {
         // getting an array of recompositions
+
         JSONArray recompositions = (JSONArray) matchingDecomp.get("Recompositions");
 
         // creating a random number between 0 and the size of the array of
@@ -318,16 +315,11 @@ public class Eliza {
                 if (words[c].equals(decompArray[1]) && !replace) {
                     replace = true;
                 }
-
             }
-
         }
-
         //convert to second person
         String toReplace = secondPerson(replacement.toString().split(" "));
         //return the recomposition rule and replace the wildcard with the replacement string
         return recomposition.replaceAll("\\*", toReplace);
-
     }
-
 }
