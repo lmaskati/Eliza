@@ -34,7 +34,7 @@ public class Eliza {
         while (!validAnswer) {
             switch (scanner.nextLine()) {
                 case "1":
-                    this.script = "restructure example";
+                    this.script = "therapist";
                     validAnswer = true;
                     break;
                 case "2":
