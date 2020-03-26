@@ -41,6 +41,21 @@
           ]
         }
       ]
+    },
+    {
+      "keyword": [
+        "bye",
+        "goodbye",
+        "see you later"
+      ],
+      "Decompositions": [
+        {
+          "Rule": "$",
+          "Recompositions": [
+            "Goodbye!"
+          ]
+        }
+      ]
     }
   ]
 }
