@@ -1,6 +1,6 @@
 import java.io.*;
 import java.util.*;
-
+import java.util.regex.*;
 import org.json.simple.*;
 import org.json.simple.parser.*;
 
@@ -26,15 +26,15 @@ public class Eliza {
         //scanner to read user input
         Scanner scanner = new Scanner(System.in);
 
-        //this of code gets the user to choose a script, if the user doesn't input the correct thing then it displays
-        //an error message and loops until they do
+        //this chunk of code gets the user to choose a script, if the user doesn't input the correct thing then it
+        //displays an error message and loops until they do
         System.out.println("What version of Eliza would you like to speak to today, enter 1 for therapist or " +
                 "2 for tech support");
         boolean validAnswer = false;
         while (!validAnswer) {
             switch (scanner.nextLine()) {
                 case "1":
-                    this.script = "therapist";
+                    this.script = "restructure example";
                     validAnswer = true;
                     break;
                 case "2":
@@ -57,34 +57,41 @@ public class Eliza {
             // takes in the user's input and sets it to lower case, removes all non letter
             // characters and replaces double space with single space
             String input = scanner.nextLine().toLowerCase();
-            input = preprocess(input).replaceAll("[^a-zA-Z ]", "").replaceAll(" {2}", " ");
+            input = preprocess(input).replaceAll("[^a-zA-Z ]", "")
+                    .replaceAll(" {2}", " ");
             // user's input as an array of words
             String[] tokens = input.split(" ");
 
-            // try and find a keyword in the user's input
-            JSONObject keyword = findKeyword(tokens);
-
+            // try and find keywords in the user's input
+            JSONObject keywordObj = findKeywordObject(input);
 
             // if there are no keywords in the user's input
-            if (keyword == null) {
+            if (keywordObj == null) {
                 // call the no keywords method and print the output
                 System.out.println(">> " + noKeywords(tokens));
             } else { // if there is a keyword in the input
+
+                //find their keyword as a string
+                String chosenKeyword = "";
+                for (Object keyword : (JSONArray) keywordObj.get("keyword")) {
+                    if (input.contains((String) keyword)) {
+                        chosenKeyword = (String) keyword;
+                    }
+                }
+
                 // get the object of the best matching decomposition.
-                JSONObject bestDecomp = findDecomposition(keyword, input);                
+                JSONObject bestDecomp = findDecomposition(keywordObj, input, chosenKeyword);
                 // and then pass it in to the choose recomposition method so a recomposition can
                 // be chosen and printed
 
-                System.out.println(">> " + chooseRecomposition(bestDecomp, tokens));
-            }
+                String response = chooseRecomposition(bestDecomp, tokens, chosenKeyword);
+                System.out.println(">> " + response);
 
-            if (keyword != null) {
-                String keyString = (String) keyword.get("keyword");
-                if (keyString.equals("bye")) {
+                if(response.equals("Goodbye!")){
                     this.is_running = false;
                 }
             }
-            
+
         }
         // close the scanner
         scanner.close();
@@ -149,7 +156,7 @@ public class Eliza {
         }
         return result.toString();
 
-    } 
+    }
 
     public String noKeywords(String[] input) {
         String result = secondPerson(input);
@@ -165,28 +172,27 @@ public class Eliza {
 
     // returns highest priority keyword object included in the users input or
     // returns a null object if the input contains no keywords
-    public JSONObject findKeyword(String[] tokens) {
+    public JSONObject findKeywordObject(String input) {
 
         // creating an array of keyword objects
         JSONObject allJson = (JSONObject) readInJson();
         JSONArray keywords = (JSONArray) allJson.get("keywords");
 
-        // add every word to a set of words
-        Set<String> wordSet = new HashSet<>(Arrays.asList(tokens));
-
-        // adds a keyword object plus its priority to the map if it is included in the
-        // set of words
+        // adds a keyword object plus its priority to the map if any of it's keywords are included in the
+        // user's string
         Map<JSONObject, Integer> wordPriority = new HashMap<>();
 
         for (int k = 0; k < keywords.size(); k++) {
             JSONObject keywordObj = (JSONObject) keywords.get(k);
-            String keywordStr = (String) keywordObj.get("keyword");
-            if (wordSet.contains(keywordStr)) {
-                wordPriority.put(keywordObj, k);
+
+            for (Object keyword :(JSONArray) keywordObj.get("keyword")) {
+                if (input.contains((String) keyword) && !(wordPriority.containsKey(keywordObj))){
+                    wordPriority.put(keywordObj, k);
+                }
             }
         }
 
-        // finds the highest priority keyword from the map of keywords
+        // finds the highest priority keyword object from the map of keyword objects
         int lowestPriority = -1;
         JSONObject highestPriorityKeyword = null;
         for (Map.Entry<JSONObject, Integer> entry : wordPriority.entrySet()) {
@@ -207,10 +213,10 @@ public class Eliza {
 
     // finds the best matching decomposition for a keyword using the input and
     // returns it (the longer the decompositon matched, the better the match is)
-    public JSONObject findDecomposition(JSONObject keyword, String input) {
+    public JSONObject findDecomposition(JSONObject keywordObj, String input, String chosenKeyword) {
 
         // get the array of all decomposition rules for a keyword
-        JSONArray decompositionsArray = (JSONArray) keyword.get("Decompositions");
+        JSONArray decompositionsArray = (JSONArray) keywordObj.get("Decompositions");
 
         // find the longest decomposition rule that exists within the input string
         String longestDecomp = "";
@@ -219,14 +225,14 @@ public class Eliza {
         for (Object o : decompositionsArray) {
             JSONObject decompositionObj = (JSONObject) o;
             String decomposition = (String) decompositionObj.get("Rule");
+            //decomposition = decomposition.replaceAll(Pattern.quote("$"), "");
 
             int length = decomposition.length();
             if (decomposition.contains("*") && input.length() >= decomposition.length())
                 length++;
 
-            if (input.contains(decomposition.replaceAll("\\*", ""))
-                    && length > longestDecomp.length()) {
-
+            if (input.contains(decomposition.replaceAll("\\*", "")
+                    .replaceAll(Pattern.quote("$"), chosenKeyword)) && length > longestDecomp.length()) {
                 longestDecompObj = (JSONObject) o;
                 longestDecomp = decomposition;
             }
@@ -240,9 +246,8 @@ public class Eliza {
 
     // given a decompositon rule, choose a recomposition rule at random and then
     // return it to be printed
-    public String chooseRecomposition(JSONObject matchingDecomp, String[] words) {
+    public String chooseRecomposition(JSONObject matchingDecomp, String[] words, String chosenKeyword) {
         // getting an array of recompositions
-
         JSONArray recompositions = (JSONArray) matchingDecomp.get("Recompositions");
 
         // creating a random number between 0 and the size of the array of
@@ -252,6 +257,8 @@ public class Eliza {
 
         // get the randomly chosen recomposition string and return it to be printed
         String recomposition = (String) recompositions.get(randomIndex);
+        recomposition = recomposition.replaceAll(Pattern.quote("$"), chosenKeyword);
+
 
         //if the recomposition that is chosen contains a wildcard
         if (recomposition.contains("*")) {
