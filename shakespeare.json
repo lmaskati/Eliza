@@ -1,0 +1,192 @@
+{
+  "keywords": [
+    {
+      "keyword": [
+        "dreams",
+        "dreamt",
+        "dreamed"
+      ],
+      "Decompositions": [
+        {
+          "Rule": "$",
+          "Recompositions": [
+            "Dreamers often lie.",
+            "A dream itself is but a shadow.",
+            "Dreams are toys.",
+            "If it be thus to dream, still let me sleep."
+          ]
+        }
+      ]
+    },
+    {
+      "keyword": [
+        "friend",
+        "friendly",
+        "friendship"
+      ],
+      "Decompositions": [
+        {
+          "Rule": "$",
+          "Recompositions": [
+            "Friendship is constant in all things.",
+            "Keep thy friend under thy own life’s key.",
+            "Words are easy, like the wind; faithful friends are hard to find"
+          ]
+        }
+      ]
+    },
+    {
+      "keyword": [
+        "sorry"
+      ],
+      "Decompositions": [
+        {
+          "Rule": "$",
+          "Recompositions": [
+            "My lord, there needs no such apology.",
+            "Strengthen'd with what apology you think may make it probable need."
+          ]
+        }
+      ]
+    },
+    {
+      "keyword": [
+        "remember",
+        "memory",
+        "recollect"
+      ],
+      "Decompositions": [
+        {
+          "Rule": "$",
+          "Recompositions": [
+            "I beseech you remember.",
+            "Purpose is but the slave to memory.",
+            "Else your memory is bad, going o'er it erewhile.",
+            "Pluck from the memory a rooted sorrow."
+          ]
+        }
+      ]
+    },
+    {
+      "keyword": [
+        "fear",
+        "afraid",
+        "dread",
+        "scared",
+        "anxious",
+        "anxiety",
+        "stress",
+        "stressed",
+        "stressful",
+        "scary"
+      ],
+      "Decompositions": [
+        {
+          "Rule": "$",
+          "Recompositions": [
+            "Be just and fear not.",
+            "Be that thou know'st thou art and then thou art as great as that thou fear'st.",
+            "The best safety lies in fear.",
+            "Present fears are less than horrible imaginings."
+          ]
+        }
+      ]
+    },
+    {
+      "keyword": [
+        "sad",
+        "sorrowful",
+        "sadness",
+        "sorrow"
+      ],
+      "Decompositions": [
+        {
+          "Rule": "$",
+          "Recompositions": [
+            "Misery acquaints a man with strange bedfellows.",
+            "When sorrows come, they come not single spies, but in battalions.",
+            "Give sorrow words; the grief that does not speak knits up the o-er wrought heart and bids it break."
+          ]
+        }
+      ]
+    },
+    {
+      "keyword": [
+        "tired",
+        "exhausted",
+        "weary",
+        "tires",
+        "exhausts",
+        "sleepy"
+      ],
+      "Decompositions": [
+        {
+          "Rule": "$",
+          "Recompositions": [
+            "Sleep that relieves the weary laborer and heals hurt minds.",
+            "Sleep, the main course in life's feast, and the most nourishing.",
+            "You lack the season of all natures, sleep.",
+            "O sleep! O gentle sleep!"
+          ]
+        }
+      ]
+    },
+    {
+      "keyword": [
+        "mother",
+        "brother",
+        "father",
+        "sister",
+        "husband",
+        "wife",
+        "daughter",
+        "son",
+        "grandmother",
+        "grandfather"
+      ],
+      "Decompositions": [
+        {
+          "Rule": "$",
+          "Recompositions": [
+            "Love sought is good, but given unsought, is better.",
+            "Love is not love that alters when it alteration finds.",
+            "Go hand in hand, not one before another."
+          ]
+        }
+      ]
+    },
+    {
+      "keyword": [
+        "hope",
+        "wish",
+        "hoped",
+        "wished"
+      ],
+      "Decompositions": [
+        {
+          "Rule": "$",
+          "Recompositions": [
+            "All that glitters is not gold."
+          ]
+        }
+      ]
+    },
+    {
+      "keyword": [
+        "bye",
+        "goodbye",
+        "see you later",
+        "exit",
+        "farewell"
+      ],
+      "Decompositions": [
+        {
+          "Rule": "$",
+          "Recompositions": [
+            "Adieu! I have too grieved a heart to take a tedious leave!"
+          ]
+        }
+      ]
+    }
+  ]
+}
