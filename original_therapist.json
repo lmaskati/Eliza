@@ -1,0 +1,326 @@
+{
+  "keywords": [
+    {
+      "keyword": [
+        "disagreement",
+        "fight",
+        "argument",
+        "fought",
+        "argued",
+        "argue"
+      ],
+      "Decompositions": [
+        {
+          "Rule": "$ about *",
+          "Recompositions": [
+            "What do you feel about *?",
+            "How often does this happen?"
+          ]
+        },
+        {
+          "Rule": "$",
+          "Recompositions": [
+            "How does this make you feel?"
+          ]
+        }
+      ]
+    },
+    {
+      "keyword": [
+        "definitely",
+        "absolutely",
+        "undeniably"
+      ],
+      "Decompositions": [
+        {
+          "Rule": "$",
+          "Recompositions": [
+            "You seem very certain.",
+            "Why $? Have you never felt otherwise?"
+          ]
+        }
+      ]
+    },
+    {
+      "keyword": [
+        "maybe",
+        "perhaps",
+        "possibly"
+      ],
+      "Decompositions": [
+        {
+          "Rule": "$",
+          "Recompositions": [
+            "You seem uncertain.",
+            "You seem unsure.",
+            "Why $? Are you unsure?"
+          ]
+        }
+      ]
+    },
+    {
+      "keyword": [
+        "mood"
+      ],
+      "Decompositions": [
+        {
+          "Rule": "bad $",
+          "Recompositions": [
+            "What do you think is responsible for this bad $?",
+            "What do you think causes this bad $"
+          ]
+        },
+        {
+          "Rule": "$ swings",
+          "Recompositions": [
+            "Have you spoken to others about these $ swings?"          ]
+        },
+        {
+          "Rule": "$ changes",
+          "Recompositions": [
+            "Have you spoken to others about these mood changes?"
+          ]
+        },
+        {
+          "Rule": "$",
+          "Recompositions": [
+            "Could you explain that further?",
+            "Would you like to go into more detail?"
+          ]
+        }
+      ]
+    },
+    {
+      "keyword": [
+        "frustrated",
+        "anxious",
+        "annoyed",
+        "exasperated",
+        "tense",
+        "stressed",
+        "angry",
+        "sad",
+        "depressed",
+        "hopeless",
+        "mad"
+      ],
+      "Decompositions": [
+        {
+          "Rule": "am $",
+          "Recompositions": [
+            "How long have you felt $ for?",
+            "Do you think you get $ easily?",
+            "Why do you think you feel $?"
+          ]
+        },
+        {
+          "Rule": "feel $",
+          "Recompositions": [
+            "How long have you felt $ for?",
+            "Do you think you get $ easily?",
+            "Why do you think you feel $?"
+          ]
+        },
+        {
+          "Rule": "feel $ about *",
+          "Recompositions": [
+            "What about * makes you feel $?",
+            "Have you felt $ about * before?"
+          ]
+        },
+        {
+          "Rule": "am $ about *",
+          "Recompositions": [
+            "What about * makes you feel $?",
+            "Have you felt $ about * before?"
+          ]
+        },
+        {
+          "Rule": "$",
+          "Recompositions": [
+            "Could you explain that further?"
+          ]
+        }
+      ]
+    },
+    {
+      "keyword": [
+        "mother",
+        "father",
+        "brother",
+        "sister",
+        "sibling",
+        "parents",
+        "siblings",
+        "mom",
+        "mum",
+        "dad",
+        "grandmother",
+        "grandfather",
+        "grandad",
+        "grandpa",
+        "grandma",
+        "gran"
+      ],
+      "Decompositions": [
+        {
+          "Rule": "$",
+          "Recompositions": [
+            "How well do you get along with your $?",
+            "How would you describe your relationship with your $?",
+            "What is your relationship with your $ like?",
+            "Have you been in any conflicts with your $ recently?"
+          ]
+        }
+      ]
+    },
+    {
+      "keyword": [
+        "boyfriend",
+        "girlfriend",
+        "wife",
+        "husband",
+        "partner",
+        "ex"
+      ],
+      "Decompositions": [
+        {
+          "Rule": "$",
+          "Recompositions": [
+            "What is your relationship with your $ like?",
+            "Do you love your $?",
+            "Tell me more about your $."
+          ]
+        }
+      ]
+    },
+    {
+      "keyword": [
+        "always",
+        "never",
+        "nobody",
+        "everyone",
+        "everything"
+      ],
+      "Decompositions": [
+        {
+          "Rule": "$",
+          "Recompositions": [
+            "Really, $?",
+            "Can you think of a more specific example?"
+          ]
+        }
+      ]
+    },
+    {
+      "keyword": [
+        "want",
+        "need"
+      ],
+      "Decompositions": [
+        {
+          "Rule": "i $ *",
+          "Recompositions": [
+            "Why do you think you $ *?",
+            "What about * do you feel strongly about?"
+          ]
+        },
+        {
+          "Rule": "$",
+          "Recompositions": [
+            "Could you explain that further?",
+            "Would you like to go into more detail?"
+          ]
+        }
+      ]
+    },
+    {
+      "keyword": [
+        "worry",
+        "worried",
+        "afraid",
+        "scared"
+      ],
+      "Decompositions": [
+        {
+          "Rule": "am $ about *",
+          "Recompositions": [
+            "What exactly about * worries you?",
+            "Has * worried you before?",
+            "Tell me more about *."
+          ]
+        },
+        {
+          "Rule": "am $ that *",
+          "Recompositions": [
+            "What exactly about * worries you?",
+            "Has * worried you before?",
+            "Tell me more about *."
+          ]
+        },
+        {
+          "Rule": "$ about *",
+          "Recompositions": [
+            "Tell me more about *."
+          ]
+        },
+        {
+          "Rule": "$",
+          "Recompositions": [
+            "Being worried is not healthy."
+          ]
+        }
+      ]
+    },
+    {
+      "keyword": [
+        "obsess",
+        "obsessed"
+      ],
+      "Decompositions": [
+        {
+          "Rule": "i $ about *",
+          "Recompositions": [
+            "Do you often have obsessive thoughts?",
+            "Why do you think you are obsessed with *?" 
+          ]
+        },
+        {
+          "Rule": "$",
+          "Recompositions": [
+            "Tell me more about the obsession."
+          ]
+        }
+      ]
+    },
+    {
+      "keyword": [
+        ""
+      ],
+      "Decompositions": [
+        {
+          "Rule": "$",
+          "Recompositions": [
+            "Could you explain that further?",
+            "Would you like to go into more detail?"
+          ]
+        }
+      ]
+    },
+    {
+      "keyword": [
+        "bye",
+        "goodbye",
+        "exit"
+      ],
+      "Decompositions": [
+        {
+          "Rule": "$",
+          "Recompositions": [
+            "Goodbye!"
+          ]
+        }
+      ]
+    }
+  ]
+}
