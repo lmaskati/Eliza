@@ -248,19 +248,6 @@
     },
     {
       "keyword": [
-        ""
-      ],
-      "Decompositions": [
-        {
-          "Rule": "$",
-          "Recompositions": [
-            "Pray, telleth me more."
-          ]
-        }
-      ]
-    },
-    {
-      "keyword": [
         "bye",
         "goodbye",
         "see you later",
@@ -274,6 +261,19 @@
             "Adieu! I have too grieved a heart to take a tedious leave!",
             "Farewell!",
             "My necessaries are embark'd: farewell."
+          ]
+        }
+      ]
+    },
+    {
+      "keyword": [
+        ""
+      ],
+      "Decompositions": [
+        {
+          "Rule": "$",
+          "Recompositions": [
+            "Pray, telleth me more."
           ]
         }
       ]
