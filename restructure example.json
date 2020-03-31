@@ -52,7 +52,23 @@
         {
           "Rule": "$",
           "Recompositions": [
-            "Goodbye!"
+            "Goodbye!",
+            "See you later",
+            "Farewell"
+          ]
+        }
+      ]
+    },
+    {
+      "keyword": [
+        ""
+      ],
+      "Decompositions": [
+        {
+          "Rule": "$",
+          "Recompositions": [
+            "Could you explain that further?",
+            "Would you like to go into more detail?"
           ]
         }
       ]
