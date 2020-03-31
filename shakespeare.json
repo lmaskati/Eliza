@@ -248,6 +248,19 @@
     },
     {
       "keyword": [
+        ""
+      ],
+      "Decompositions": [
+        {
+          "Rule": "$",
+          "Recompositions": [
+            "Pray, telleth me more."
+          ]
+        }
+      ]
+    },
+    {
+      "keyword": [
         "bye",
         "goodbye",
         "see you later",
