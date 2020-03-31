@@ -69,6 +69,25 @@
     },
     {
       "keyword": [
+        "thought",
+        "think",
+        "thinking"
+      ],
+      "Decompositions": [
+        {
+          "Rule": "$",
+          "Recompositions": [
+            "There is nothing either good or bad but thinking makes it so.",
+            "Make not your thoughts your prisons.",
+            "Be great in act, as you have been in thought.",
+            "Teach me how I should forget to think.",
+            "There is nothing either good or bad, but thinking makes it so."
+          ]
+        }
+      ]
+    },
+    {
+      "keyword": [
         "fear",
         "afraid",
         "dread",
@@ -133,7 +152,26 @@
     },
     {
       "keyword": [
+        "feel",
+        "felt"
+      ],
+      "Decompositions": [
+        {
+          "Rule": "$",
+          "Recompositions": [
+            "Speak what we feel, not what we ought to say.",
+            "Write till your ink be dry, and with your tears moist it again."
+          ]
+        }
+      ]
+    },
+    {
+      "keyword": [
         "mother",
+        "mum",
+        "mom",
+        "dad",
+        "sibling",
         "brother",
         "father",
         "sister",
@@ -157,6 +195,29 @@
     },
     {
       "keyword": [
+        "boyfriend",
+        "girlfriend",
+        "love",
+        "loves",
+        "loved",
+        "loving",
+        "marriage",
+        "lover"
+      ],
+      "Decompositions": [
+        {
+          "Rule": "$",
+          "Recompositions": [
+            "Speak low if you speak love.",
+            "The course of true love never did run smooth.",
+            "Love goes by haps; Some Cupid kills with arrows, some with traps.",
+            "Love is like a child, That longs for everything it can come by."
+          ]
+        }
+      ]
+    },
+    {
+      "keyword": [
         "hope",
         "wish",
         "hoped",
@@ -173,6 +234,20 @@
     },
     {
       "keyword": [
+        "am",
+        "was"
+      ],
+      "Decompositions": [
+        {
+          "Rule": "i $",
+          "Recompositions": [
+            "To be or not to be - that is the question."
+          ]
+        }
+      ]
+    },
+    {
+      "keyword": [
         "bye",
         "goodbye",
         "see you later",
@@ -183,7 +258,9 @@
         {
           "Rule": "$",
           "Recompositions": [
-            "Adieu! I have too grieved a heart to take a tedious leave!"
+            "Adieu! I have too grieved a heart to take a tedious leave!",
+            "Farewell!",
+            "My necessaries are embark'd: farewell."
           ]
         }
       ]
