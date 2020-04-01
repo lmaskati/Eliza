@@ -7,9 +7,9 @@ import org.json.simple.parser.*;
 public class Engine {
     public boolean running;
     public boolean fromGUI;
-    public boolean debugMode;
-    public String script;
-    public String response;
+    public boolean debugMode = false;
+    public String script = "therapist";
+    public String response = "";
     public String userInput = "";
 
     //scanner to read user input
@@ -64,8 +64,8 @@ public class Engine {
 
         //this chunk of code gets the user to choose a script, if the user doesn't input the correct thing then it
         //displays an error message and loops until they do
-        System.out.println("What version of Eliza would you like to speak to today, enter 1 for therapist or " +
-                "2 for tech support");
+        System.out.println("What version of Eliza would you like to speak to today, enter 1 for therapist, " +
+                "2 for tech support or 3 for \"Shakespeare\"");
         boolean validAnswer = false;
         while (!validAnswer) {
             switch (scanner.nextLine()) {
@@ -77,8 +77,12 @@ public class Engine {
                     this.script = "tech support";
                     validAnswer = true;
                     break;
+                case "3":
+                    this.script = "shakespeare";
+                    validAnswer = true;
+                    break;
                 default:
-                    System.out.println("Invalid answer, Please only enter \"1\" or \"2\" ");
+                    System.out.println("Invalid answer, Please only enter \"1\", \"2\" or \"3\"");
             }
         }
 
@@ -100,17 +104,21 @@ public class Engine {
 
     //displays the chosen script
     public void scriptMsg() {
-        setResponse("You have chosen the " + this.script + " version of Eliza \n");
         if (!fromGUI) {
+            setResponse("You have chosen the " + this.script + " version of Eliza \n");
             System.out.println(getResponse());
+        } else{
+            setResponse("Script: " + this.script);
         }
     }
 
     //displays the welcome message
     public void welcomeMsg() {
-        setResponse(">> Hi, I'm Eliza! What's your problem today?");
         if (!fromGUI) {
+            setResponse(">> Hi, I'm Eliza! What's your problem today?");
             System.out.println(getResponse());
+        } else {
+            setResponse("Hi, I'm Eliza! What's your problem today?");
         }
     }
 
@@ -213,19 +221,6 @@ public class Engine {
         }
         return result.toString();
 
-    }
-
-    //no longer called
-    public String noKeywords(String[] input) {
-        String result = secondPerson(input);
-        result = result + ("?");
-        String[] options = {"Could you explain that further?", "Would you like to go into more detail?",
-                result};
-
-        Random random = new Random();
-        int rand = random.nextInt(3);
-
-        return options[rand];
     }
 
     // returns the highest priority keyword object included in the users input. A keyword object has a higher priority
