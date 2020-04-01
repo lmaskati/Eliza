@@ -45,7 +45,7 @@ public class GUI {
 
         JRadioButton shakeSpeare = setupRadioButton(colourA, "Shakespeare", colourE, 0, 30, false);
         shakeSpeare.addActionListener(e -> {
-            engine.setScript("restructure example");
+            engine.setScript("shakespeare");
         });
 
         scripts.add(therapist);
@@ -133,7 +133,7 @@ public class GUI {
 
       JButton sendBtn = setupButton(colourC, "Send", colourE, 12);
         sendBtn.addActionListener(e -> {
-            engine.setUserInput(inputField.getText());
+            engine.setUserInput(inputField.getText().toLowerCase());
             inputList.add(inputField.getText());
             inputList.add("");
             inputList.add("");
