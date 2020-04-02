@@ -12,8 +12,6 @@ public class Engine {
     public String response = "";
     public String userInput = "";
 
-    //scanner to read user input
-    Scanner scanner = new Scanner(System.in);
 
     public Engine(boolean fromGUI) {
         this.fromGUI = fromGUI;
@@ -62,34 +60,13 @@ public class Engine {
     // read eval print loop, to process and respond to user input
     public void repl() {
 
-        //this chunk of code gets the user to choose a script, if the user doesn't input the correct thing then it
-        //displays an error message and loops until they do
-        System.out.println("What version of Eliza would you like to speak to today, enter 1 for therapist, " +
-                "2 for tech support or 3 for \"Shakespeare\"");
-        boolean validAnswer = false;
-        while (!validAnswer) {
-            switch (scanner.nextLine()) {
-                case "1":
-                    this.script = "therapist";
-                    validAnswer = true;
-                    break;
-                case "2":
-                    this.script = "tech support";
-                    validAnswer = true;
-                    break;
-                case "3":
-                    this.script = "shakespeare";
-                    validAnswer = true;
-                    break;
-                default:
-                    System.out.println("Invalid answer, Please only enter \"1\", \"2\" or \"3\"");
-            }
-        }
-
         //display chosen script
         scriptMsg();
         //display the welcome message
         welcomeMsg();
+
+        //scanner to read user input
+        Scanner scanner = new Scanner(System.in);
 
         while (this.running) {
             //get the user's input from the terminal
@@ -97,8 +74,7 @@ public class Engine {
             //process the input, find a response, and print the response.
             processAndPrintResponse();
         }
-
-        // close the scanner
+        //close the scanner
         scanner.close();
     }
 
@@ -140,12 +116,11 @@ public class Engine {
         //find their keyword as a string
         String chosenKeyword = "";
         for (Object keyword : (JSONArray) keywordObj.get("keyword")) {
-            for (int i = 0; i < tokens.length; i++) {
+            for (String curWord : tokens) {
 
-                String curWord = tokens[i];
-
-                if (curWord.equals((String) keyword)) {
+                if (curWord.equals(keyword)) {
                     chosenKeyword = (String) keyword;
+                    break;
                 }
             }
         }
@@ -243,15 +218,13 @@ public class Engine {
 
             for (Object keyword : (JSONArray) keywordObj.get("keyword")) {
 
-                for (int i = 0; i < tokens.length; i++) {
+                for (String curWord : tokens) {
 
-                    String curWord = tokens[i];
-
-                    if (curWord.equals((String) keyword) && !(wordPriority.containsKey(keywordObj))) {
+                    if (curWord.equals(keyword) && !(wordPriority.containsKey(keywordObj))) {
                         wordPriority.put(keywordObj, k);
                     }
 
-                } 
+                }
             }
         }
 
@@ -331,7 +304,7 @@ public class Engine {
         //if the recomposition that is chosen contains a wildcard
         if (recomposition.contains("*")) {
             //then call the substituteWildcard method
-            recomposition = substituteWildcard(recomposition, words, matchingDecomp);
+            recomposition = substituteWildcard(recomposition, words, matchingDecomp, chosenKeyword);
         }
 
         return recomposition;
@@ -340,11 +313,11 @@ public class Engine {
 
     //method substitutes the wildcard (*) at either the start or the end of the decomposition rule with the
     //relevant text that the user input
-    public String substituteWildcard(String recomposition, String[] words, JSONObject matchingDecomp) {
+    public String substituteWildcard(String recomposition, String[] words, JSONObject matchingDecomp, String chosenKeyword) {
 
         //get the decomposition rule and split it into an array of words
         String decompRule = (String) matchingDecomp.get("Rule");
-        String[] decompArray = decompRule.split(" ");
+        String[] decompArray = decompRule.replaceAll(Pattern.quote("$"), chosenKeyword).split(" ");
 
         //replacement string will hold the words that are being put in place of the wildcard in the recomposition rule
         StringBuilder replacement = new StringBuilder();
