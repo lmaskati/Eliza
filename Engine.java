@@ -126,8 +126,7 @@ public class Engine {
     public void processAndPrintResponse() {
         // takes in the user's input and sets it to lower case, removes all non letter
         // characters and replaces double space with single space
-        setUserInput(preprocess(getUserInput()).replaceAll("[^a-zA-Z] [0-9]", "")
-                .replaceAll(" {2}", " "));
+        setUserInput(preprocess(getUserInput()).replaceAll("[^A-Za-z0-9]", " "));
         // user's input as an array of words
         String[] tokens = getUserInput().split(" ");
 
@@ -136,18 +135,24 @@ public class Engine {
         JSONArray keywords = (JSONArray) allJson.get("keywords");
 
         // try and find keywords in the user's input
-        JSONObject keywordObj = findKeywordObject(getUserInput(), keywords);
+        JSONObject keywordObj = findKeywordObject(tokens, keywords);
 
         //find their keyword as a string
         String chosenKeyword = "";
         for (Object keyword : (JSONArray) keywordObj.get("keyword")) {
-            if (getUserInput().contains((String) keyword)) {
-                chosenKeyword = (String) keyword;
+            for (int i = 0; i < tokens.length; i++) {
+
+                String curWord = tokens[i];
+
+                if (curWord.equals((String) keyword)) {
+                    chosenKeyword = (String) keyword;
+                }
             }
         }
 
         // get the object of the best matching decomposition.
         JSONObject bestDecomp = findDecomposition(keywordObj, getUserInput(), chosenKeyword);
+
 
         // and then pass it in to the choose recomposition method so a recomposition can
         // be chosen and printed
@@ -227,7 +232,7 @@ public class Engine {
     // the earlier it appears in the array of keyword objects in the JSON script file.
     // So the keywords for the object at index 0 have the highest priority, and the object at the end of the array
     // (the default) has the lowest
-    public JSONObject findKeywordObject(String input, JSONArray keywords) {
+    public JSONObject findKeywordObject(String[] tokens, JSONArray keywords) {
 
         // adds a keyword object plus its priority to the map if any of it's keywords are included in the
         // user's string
@@ -237,9 +242,16 @@ public class Engine {
             JSONObject keywordObj = (JSONObject) keywords.get(k);
 
             for (Object keyword : (JSONArray) keywordObj.get("keyword")) {
-                if (input.contains((String) keyword) && !(wordPriority.containsKey(keywordObj))) {
-                    wordPriority.put(keywordObj, k);
-                }
+
+                for (int i = 0; i < tokens.length; i++) {
+
+                    String curWord = tokens[i];
+
+                    if (curWord.equals((String) keyword) && !(wordPriority.containsKey(keywordObj))) {
+                        wordPriority.put(keywordObj, k);
+                    }
+
+                } 
             }
         }
 
@@ -258,8 +270,9 @@ public class Engine {
         }
 
         //if none of the keywords have been matched, return the last default null object
-        if (highestPriorityKeyword == null)
-            return (JSONObject) keywords.get(keywords.size() - 2);
+        if (highestPriorityKeyword == null) {
+            return (JSONObject) keywords.get(keywords.size() - 1);
+        }
         else
             //else return the highest priority keyword object
             return highestPriorityKeyword;
