@@ -12,11 +12,12 @@ public class Engine {
     public String response = "";
     public String userInput = "";
 
-
+    //constructor that takes in a true or false depending if it is being called from the GUI or not
     public Engine(boolean fromGUI) {
         this.fromGUI = fromGUI;
     }
 
+    //region getters and setters
     public String getUserInput() {
         return userInput;
     }
@@ -56,6 +57,7 @@ public class Engine {
     public void setScript(String script) {
         this.script = script;
     }
+    //endregion getters and setters
 
     // read eval print loop, to process and respond to user input
     public void repl() {
@@ -100,8 +102,8 @@ public class Engine {
 
     //method processes the user's input, finds a response and then prints the response
     public void processAndPrintResponse() {
-        // takes in the user's input and sets it to lower case, removes all non letter
-        // characters and replaces double space with single space
+
+        // takes the user's input and sets it to lower case, removes all non letter characters
         setUserInput(preprocess(getUserInput()).replaceAll("[^A-Za-z0-9]", " "));
         // user's input as an array of words
         String[] tokens = getUserInput().split(" ");
@@ -135,14 +137,14 @@ public class Engine {
 
         if (!fromGUI) {
             System.out.println(">> " + response);
+
             //if the keyword is at the second last entry of the keywords array. i.e. it is a "bye" word
-            //then this is running is set to false so the repl loop terminates and the program stops
+            //then running is set to false so the repl loop terminates and the program stops
             if (keywords.indexOf(keywordObj) == keywords.size() - 2)
                 this.running = false;
         }
 
     }
-
 
     public String preprocess(String str) {
         Map<String, String> preprocessMap = new HashMap<>();
