@@ -17,16 +17,16 @@ public class GUI {
 
     ArrayList<String> responseList = new ArrayList<>();
     ArrayList<String> inputList = new ArrayList<>();
-    
+
     JLabel[] responseLabels = new JLabel[10];
     JLabel[] inputLabels = new JLabel[10];
 
     JPanel responsechatLog = setupGridPanel(Color.white, 50, 125, 350, 575, 10, 1);
     JPanel inputchatLog = setupGridPanel(Color.white, 400, 125, 350, 575, 10, 1);
 
-    
+
     public void createGUI() {
-        
+
         JPanel titleMenuPanel = setupGridPanel(colourA, 100, 100, 600, 100, 1, 3);
         JLabel titleMenuText = setupJLabel(colourA, colourC, "Eliza Menu", 40, 0);
 
@@ -55,7 +55,8 @@ public class GUI {
         JLabel chooseScript = setupJLabel(colourA, colourB, "Choose Script", 30, 0);
 
         JPanel debugModePanel = setupGridPanel(colourA, 100, 400, 600, 50, 1, 3);
-        JLabel debugMode = setupJLabel(colourA, colourB, "Debug Mode", 30, 0);
+        JLabel debugMode = setupJLabel(colourA, colourB, "Debugging Mode:", 25, 0);
+        JButton whatisdebugBtn = setupJButton(colourA, "What is debugging mode?", colourB, 10, false);
         JPanel debugBtnPanel = setupGridPanel(colourA, 310, 445, 200, 70, 1, 2);
         ButtonGroup debugs = new ButtonGroup();
         JRadioButton debuggingOnBtn = setupRadioButton(colourA, "On", colourE, 0, 20, false);
@@ -72,9 +73,15 @@ public class GUI {
             engine.setDebugMode(false);
         });
 
+
+        whatisdebugBtn.addActionListener(e -> {
+            JOptionPane.showMessageDialog(menuFrame, "Debugging mode will print the decomposition rule that the program chooses in the terminal");
+        });
+
+
         JPanel speakBtnPanel = setupGridPanel(colourA, 100, 600, 600, 100, 1, 1);
 
-        JButton speakBtn = setupButton(colourA, "Speak to Eliza", colourB, 34);
+        JButton speakBtn = setupJButton(colourA, "Speak to Eliza", colourB, 34, true);
 
         speakBtn.addActionListener(e -> {
             startChat();
@@ -93,7 +100,7 @@ public class GUI {
 
         debugModePanel.add(new JLabel(""));
         debugModePanel.add(debugMode);
-        debugModePanel.add(new JLabel(""));
+        debugModePanel.add(whatisdebugBtn);
 
         debugBtnPanel.add(debuggingOnBtn);
         debugBtnPanel.add(debuggingOffBtn);
@@ -113,7 +120,7 @@ public class GUI {
 
         JPanel returnBtnPanel = setupGridPanel(colourA, 0, 0, 150, 75, 1, 1);
 
-        JButton returnBtn = setupButton(colourA, "Return to Menu", colourB, 15);
+        JButton returnBtn = setupJButton(colourA, "Return to Menu", colourB, 15, true);
 
         returnBtn.addActionListener(e -> {
             engine.setRunning(false);
@@ -127,11 +134,11 @@ public class GUI {
         titleChatPanel.add(new JLabel(""));
 
 
-      JPanel inputPanel = setupGridPanel(Color.white, 50, 715, 600, 30, 1, 1);
-      JPanel sendBtnPanel = setupGridPanel(colourA, 650, 715, 100, 30, 1, 1);
-      JTextField inputField = new JTextField();
+        JPanel inputPanel = setupGridPanel(Color.white, 50, 715, 600, 30, 1, 1);
+        JPanel sendBtnPanel = setupGridPanel(colourA, 650, 715, 100, 30, 1, 1);
+        JTextField inputField = new JTextField();
 
-      JButton sendBtn = setupButton(colourC, "Send", colourE, 12);
+        JButton sendBtn = setupJButton(colourC, "Send", colourE, 12, true);
         sendBtn.addActionListener(e -> {
             engine.setUserInput(inputField.getText().toLowerCase());
             inputList.add(inputField.getText());
@@ -144,24 +151,24 @@ public class GUI {
         });
 
 
-      inputPanel.add(inputField);
-      sendBtnPanel.add(sendBtn);
+        inputPanel.add(inputField);
+        sendBtnPanel.add(sendBtn);
 
-      chatGUI.add(returnBtnPanel);
-      chatGUI.add(titleChatPanel);
+        chatGUI.add(returnBtnPanel);
+        chatGUI.add(titleChatPanel);
 
 
-      for(int c = 0; c< 10; c ++) {
-          responseLabels[c] = setupJLabel(Color.white, Color.red, "", 15, 2);
-          responsechatLog.add(responseLabels[c]);
-          inputLabels[c] = setupJLabel(Color.white, Color.blue, "", 15, 4);
-          inputchatLog.add(inputLabels[c]);
-      }
+        for (int c = 0; c < 10; c++) {
+            responseLabels[c] = setupJLabel(Color.white, Color.red, "", 15, 2);
+            responsechatLog.add(responseLabels[c]);
+            inputLabels[c] = setupJLabel(Color.white, Color.blue, "", 15, 4);
+            inputchatLog.add(inputLabels[c]);
+        }
 
-      chatGUI.add(responsechatLog);
-      chatGUI.add(inputchatLog);
-      chatGUI.add(inputPanel);
-      chatGUI.add(sendBtnPanel);
+        chatGUI.add(responsechatLog);
+        chatGUI.add(inputchatLog);
+        chatGUI.add(inputPanel);
+        chatGUI.add(sendBtnPanel);
 
     }
 
@@ -202,12 +209,12 @@ public class GUI {
 
     }
 
-    private JButton setupButton(Color BACKGROUND, String text, Color FOREGROUND, int TXTSIZE) {
+    private JButton setupJButton(Color BACKGROUND, String text, Color FOREGROUND, int TXTSIZE, boolean BORDER) {
         JButton button = new JButton(text);
         button.setBackground(BACKGROUND);
         button.setForeground(FOREGROUND);
         button.setFont(new Font("Arial", Font.BOLD, TXTSIZE));
-       // button.setBorderPainted(true);
+        button.setBorderPainted(BORDER);
         return button;
     }
 
@@ -222,10 +229,10 @@ public class GUI {
 
     }
 
-    public void startChat(){
+    public void startChat() {
         responseList.clear();
         inputList.clear();
-        for(int c =0; c < 10; c++){
+        for (int c = 0; c < 10; c++) {
             responseList.add("");
             inputList.add("");
         }
@@ -254,11 +261,34 @@ public class GUI {
         menuFrame.setVisible(true);
     }
 
-    public void updateLog(){
-        for(int c = 2; c < 11; c ++){
-            responseLabels[11-c].setText(responseList.get(responseList.size() - (c-1)));
-            inputLabels[11-c].setText(inputList.get(inputList.size() - (c-1)));
+    public void updateLog() {
+        for (int c = 2; c < 11; c++) {
+            String responseText = responseList.get(responseList.size() - (c - 1));
+            String inputText = inputList.get(inputList.size() - (c - 1));
+            responseLabels[11 - c].setText(responseText);
+            inputLabels[11 - c].setText(inputText);
+
+            responseLabels[11 - c].setFont(new Font("Arial", Font.PLAIN, calcLogtxtSize(responseText.length() / 10)));
+            inputLabels[11 - c].setFont(new Font("Arial", Font.PLAIN, calcLogtxtSize(inputText.length() / 10)));
         }
     }
+    
 
+    public int calcLogtxtSize(int strLen) {
+        int txtSize;
+        switch (strLen) {
+            case 0:
+            case 1:
+            case 2:
+                txtSize = 25;
+                break;
+            case 3:
+            case 4:
+                txtSize = 15;
+                break;
+            default:
+                txtSize = 10;
+        }
+        return txtSize;
+    }
 }
