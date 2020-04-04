@@ -1,125 +1,353 @@
 {
   "keywords": [
     {
-      "keyword": "help",
+      "keyword": [
+        "computer",
+        "phone",
+        "laptop",
+        "screen",
+        "keyboard",
+        "display",
+        "mouse",
+        "speaker",
+        "microphone",
+        "watch",
+        "tv",
+        "tablet",
+        "ipad",
+        "internet",
+        "smartwatch",
+        "router",
+        "wifi",
+        "data",
+        "connection",
+        "service"
+      ],
       "Decompositions": [
         {
-          "Rule": "help",
+          "Rule": "$",
           "Recompositions": [
-            "Do you need help?"
+            "What brand is your $?",
+            "Is there something wrong with your $?",
+            "How old is your $?"
           ]
         },
         {
-          "Rule": "help me",
+          "Rule": "$ is broken",
           "Recompositions": [
-            "What can I help you with?",
-            "How can I help?",
-            "What are you having trouble with?"
-          ]
-        }
-      ]
-    },
-    {
-      "keyword": "broken",
-      "Decompositions": [
-        {
-          "Rule": "broken",
-          "Recompositions": [
-            "What is broken?",
-            "Is something broken?"
+            "How is your $ broken?",
+            "When did your $ break?",
+            "Have you tried getting your $ replaced?"
           ]
         },
         {
-          "Rule": "* is broken",
+          "Rule": "$ is *",
           "Recompositions": [
-            "How is your * broken?"
-          ]
-        }
-      ]
-    },
-    {
-      "keyword": "computer",
-      "Decompositions": [
-        {
-          "Rule": "computer",
-          "Recompositions": [
-            "What kind of computer do you have?",
-            "Is there a problem with your computer?",
-            "What make is your computer?"
-          ]
-        }
-      ]
-    },
-    {
-      "keyword": "laptop",
-      "Decompositions": [],
-      "Rule": "laptop",
-      "Recompositons": [
-        "What kind of laptop do you have? Is there a problem with your laptop?",
-        "What make is your laptop?"
-      ]
-    },
-    {
-      "keyword": "phone",
-      "Decompositions": [
-        {
-          "Rule": "phone",
-          "Recompositions": [
-            "What kind of phone do you have?",
-            "Is there a problem with your phone?",
-            "What make is your phone?"
-          ]
-        }
-      ]
-    },
-    {
-      "keyword": "google",
-      "Decompositions": [
-        {
-          "Rule": "google",
-          "Recompositions": [
-            "Did Google help with your problem?",
-            "What did google say?"
-          ]
-        }
-      ]
-    },
-    {
-      "keyword": "screen",
-      "Decompositions": [
-        {
-          "Rule": "screen",
-          "Recompositions": [
-            "Is your screen broken?"
+            "Do you know why your $ is *?",
+            "When did this issue start?"
           ]
         },
         {
-          "Rule": "screen is broken",
+          "Rule": "$ isnt *",
           "Recompositions": [
-            "Should you trye"
+            "Do you know why your $ isn't *?",
+            "When did this issue start?"
+          ]
+        },
+        {
+          "Rule": "$ wont *",
+          "Recompositions": [
+            "Do you know why your $ won't *?",
+            "When did this issue start?"
+          ]
+        },
+        {
+          "Rule": "$ doesnt *",
+          "Recompositions": [
+            "Do you know why your $ doesn't *?",
+            "When did this issue start?"
+          ]
+        },
+        {
+          "Rule": "$ cant *",
+          "Recompositions": [
+            "Do you know why your $ cant *?",
+            "When did this issue start?"
           ]
         }
       ]
     },
     {
-      "keyword": "problem",
+      "keyword": [
+        "speakers",
+        "headphones",
+        "earbuds",
+        "earphones"
+      ],
       "Decompositions": [
         {
-          "Rule": "problem",
+          "Rule": "$",
           "Recompositions": [
-            "What do you have a problem with?",
-            "What is your problem?"
+            "What brand are your $?",
+            "Is there something wrong with your $?",
+            "How old are your $?"
+          ]
+        },
+        {
+          "Rule": "$ are broken",
+          "Recompositions": [
+            "How are your $ broken?",
+            "When did your $ break?",
+            "Have you tried getting your $ replaced?"
+          ]
+        },
+        {
+          "Rule": "$ are *",
+          "Recompositions": [
+            "Do you know why your $ are *?",
+            "When did this issue start?"
+          ]
+        },
+        {
+          "Rule": "$ arent *",
+          "Recompositions": [
+            "Do you know why your $ aren't *?",
+            "When did this issue start?"
+          ]
+        },
+        {
+          "Rule": "$ wont *",
+          "Recompositions": [
+            "Do you know why your $ won't *?",
+            "When did this issue start?"
+          ]
+        },
+        {
+          "Rule": "$ dont *",
+          "Recompositions": [
+            "Do you know why your $ don't *?",
+            "When did this issue start?"
+          ]
+        },
+        {
+          "Rule": "$ cant *",
+          "Recompositions": [
+            "Do you know why your $ cant *?",
+            "When did this issue start?"
           ]
         }
       ]
     },
     {
-      "keyword": "my",
+      "keyword": [
+        "help"
+      ],
       "Decompositions": [
         {
-          "Rule": "my *",
+          "Rule": "$",
           "Recompositions": [
-            "Is there a problem with your *?"
+            "What do you need $ with?",
+            "How can I $?"
+          ]
+        }
+      ]
+    },
+    {
+      "keyword": [
+        "fix"
+      ],
+      "Decompositions": [
+        {
+          "Rule": "$",
+          "Recompositions": [
+            "Is there something broken?",
+            "What do you need to $?",
+            "Does something need fixing?",
+            "What is the issue?"
+          ]
+        }
+      ]
+    },
+    {
+      "keyword": [
+        "fixed"
+      ],
+      "Decompositions": [
+        {
+          "Rule": "$",
+          "Recompositions": [
+            "Was something broken?",
+            "What was the issue?"
+          ]
+        },
+        {
+          "Rule": "my * was $",
+          "Recompositions": [
+            "When was your * $?",
+            "Is your * still working?",
+            "What was the issue?"
+          ]
+        },
+        {
+          "Rule": "my * wasnt $",
+          "Recompositions": [
+            "Did you try to get your * $?"
+          ]
+        },
+        {
+          "Rule": "my * were $",
+          "Recompositions": [
+            "When were your * $?",
+            "Are your * still working?",
+            "What was the issue?"
+          ]
+        },
+        {
+          "Rule": "my * werent $",
+          "Recompositions": [
+            "Did you try to get your * $?"
+          ]
+        }
+      ]
+    },
+    {
+      "keyword": [
+        "work"
+      ],
+      "Decompositions": [
+        {
+          "Rule": "$",
+          "Recompositions": [
+            "Is something not working?"
+          ]
+        }
+      ]
+    },
+    {
+      "keyword": [
+        "device"
+      ],
+      "Decompositions": [
+        {
+          "Rule": "$",
+          "Recompositions": [
+            "What $ do you have? What is your $?"
+          ]
+        }
+      ]
+    },
+    {
+      "keyword": [
+        "sound",
+        "sounds"
+      ],
+      "Decompositions": [
+        {
+          "Rule": "$",
+          "Recompositions": [
+            "Is there something wrong with your sound?",
+            "What device or equipment is having trouble with sound?"
+          ]
+        }
+      ]
+    },
+    {
+      "keyword": [
+        "replace"
+      ],
+      "Decompositions": [
+        {
+          "Rule": "$",
+          "Recompositions": [
+            "What did you replace?"
+          ]
+        }
+      ]
+    },
+    {
+      "keyword": [
+        "replaced"
+      ],
+      "Decompositions": [
+        {
+          "Rule": "$",
+          "Recompositions": [
+            "What was replaced?",
+            "When was it replaced?"
+          ]
+        },
+        {
+          "Rule": "* was $",
+          "Recompositions": [
+            "When was your * $?",
+            "Did replacing your * not fix it?"
+          ]
+        }
+      ]
+    },
+    {
+      "keyword": [
+        "broken",
+        "slow",
+        "bad"
+      ],
+      "Decompositions": [
+        {
+          "Rule": "$",
+          "Recompositions": [
+            "What is $?",
+            "Is something $?",
+            "Has it always been $?"
+          ]
+        }
+      ]
+    },
+    {
+      "keyword": [
+        "wont",
+        "cant",
+        "doesnt",
+        "isnt",
+        "arent",
+        "refuses",
+        "denies"
+      ],
+      "Decompositions": [
+        {
+          "Rule": "$",
+          "Recompositions": [
+            "What device or equipment are you having trouble with?",
+            "When did this start happening?"
+          ]
+        }
+      ]
+    },
+    {
+      "keyword": [
+        "bye",
+        "goodbye",
+        "see you later"
+      ],
+      "Decompositions": [
+        {
+          "Rule": "$",
+          "Recompositions": [
+            "Goodbye!"
+          ]
+        }
+      ]
+    },
+    {
+      "keyword": [
+        ""
+      ],
+      "Decompositions": [
+        {
+          "Rule": "$",
+          "Recompositions": [
+            "Could you explain that further?",
+            "Would you like to go into more detail?",
+            "Are you having issues with something in particular?"
           ]
         }
       ]
