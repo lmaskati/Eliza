@@ -1,6 +1,7 @@
 import java.io.*;
 import java.util.*;
 import java.util.regex.*;
+
 import org.json.simple.*;
 import org.json.simple.parser.*;
 
@@ -85,18 +86,34 @@ public class Engine {
         if (!fromGUI) {
             setResponse("You have chosen the " + this.script + " version of Eliza \n");
             System.out.println(getResponse());
-        } else{
+        } else {
             setResponse("Script: " + this.script);
         }
     }
 
     //displays the welcome message
     public void welcomeMsg() {
-        if (!fromGUI) {
-            setResponse(">> Hi, I'm Eliza! What's your problem today?");
-            System.out.println(getResponse());
+        if (this.script.equals("shakespeare")) {
+            if (!fromGUI) {
+                setResponse(">> Greetings");
+                System.out.println(getResponse());
+            } else {
+                setResponse("Greetings");
+            }
+        } else if (this.script.equals("tech support")) {
+            if (!fromGUI) {
+                setResponse(">> Hi, I'm Eliza! What can I help you with?");
+                System.out.println(getResponse());
+            } else {
+                setResponse("Hi, I'm Eliza! What can I help you with?");
+            }
         } else {
-            setResponse("Hi, I'm Eliza! What's your problem today?");
+            if (!fromGUI) {
+                setResponse(">> Hi, I'm Eliza! What's your problem today?");
+                System.out.println(getResponse());
+            } else {
+                setResponse("Hi, I'm Eliza! What's your problem today?");
+            }
         }
     }
 
@@ -247,8 +264,7 @@ public class Engine {
         //if none of the keywords have been matched, return the last default null object
         if (highestPriorityKeyword == null) {
             return (JSONObject) keywords.get(keywords.size() - 1);
-        }
-        else
+        } else
             //else return the highest priority keyword object
             return highestPriorityKeyword;
 
