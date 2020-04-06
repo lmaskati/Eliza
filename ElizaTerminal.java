@@ -2,6 +2,11 @@ import java.util.Scanner;
 
 public class ElizaTerminal {
 
+    /**
+     * gets user to choose from one of 3 scripts and to enable or disable debugging mode.
+     * Then goes on to start the engine repl.
+     * @param args command line arguments
+     */
     public static void main(String[] args) {
         // instantiate engine
         Engine engine = new Engine(false);
