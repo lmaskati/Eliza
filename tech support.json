@@ -33,6 +33,18 @@
           ]
         },
         {
+          "Rule": "old $",
+          "Recompositions": [
+            "How old is your $?"
+          ]
+        },
+        {
+          "Rule": "new $",
+          "Recompositions": [
+            "How new is your $?"
+          ]
+        },
+        {
           "Rule": "$ is broken",
           "Recompositions": [
             "How is your $ broken?",
@@ -94,6 +106,18 @@
           ]
         },
         {
+          "Rule": "old $",
+          "Recompositions": [
+            "How old are your $?"
+          ]
+        },
+        {
+          "Rule": "new $",
+          "Recompositions": [
+            "How new are your $?"
+          ]
+        },
+        {
           "Rule": "$ are broken",
           "Recompositions": [
             "How are your $ broken?",
@@ -134,20 +158,6 @@
           "Recompositions": [
             "Do you know why your $ cant *?",
             "When did this issue start?"
-          ]
-        }
-      ]
-    },
-    {
-      "keyword": [
-        "help"
-      ],
-      "Decompositions": [
-        {
-          "Rule": "$",
-          "Recompositions": [
-            "What do you need $ with?",
-            "How can I $?"
           ]
         }
       ]
@@ -277,6 +287,12 @@
           ]
         },
         {
+          "Rule": "get it $",
+          "Recompositions": [
+            "This sounds like a good idea"
+          ]
+        },
+        {
           "Rule": "* was $",
           "Recompositions": [
             "When was your * $?",
@@ -324,9 +340,28 @@
     },
     {
       "keyword": [
+        "hello",
+        "hi",
+        "hiya",
+        "hey"
+      ],
+      "Decompositions": [
+        {
+          "Rule": "$",
+          "Recompositions": [
+            "Hello, anything you need help with today?",
+            "Hi, anything you need help with today?",
+            "Hey, anything you need help with today?"
+          ]
+        }
+      ]
+    },
+    {
+      "keyword": [
         "bye",
         "goodbye",
-        "see you later"
+        "cya",
+        "exit"
       ],
       "Decompositions": [
         {
