@@ -4,100 +4,176 @@ import java.util.regex.*;
 import org.json.simple.*;
 import org.json.simple.parser.*;
 
-public class Eliza {
-    private boolean is_running;
-    private String script;
+public class Engine {
+    public boolean running;
+    public boolean fromGUI;
+    public boolean debugMode = false;
+    public String script = "therapist";
+    public String response = "";
+    public String userInput = "";
 
-    public Eliza(boolean is_running) {
-        this.is_running = true;
+    /**
+     * constructor that takes in a true or false depending if it is being called from the GUI or not
+     *
+     * @param fromGUI boolean value, whether or not the object is being made from the terminal or GUI
+     */
+    public Engine(boolean fromGUI) {
+        this.fromGUI = fromGUI;
     }
 
-    public static void main(String[] args) {
-        // instantiate engine
-        Eliza engine = new Eliza(true);
-        // run the repl
-        engine.repl();
+    //region getters and setters
+    public String getUserInput() {
+        return userInput;
     }
 
+    public void setUserInput(String userInput) {
+        this.userInput = userInput;
+    }
 
-    // read eval print loop, to process and respond to user input
+    public String getResponse() {
+        return response;
+    }
+
+    public void setResponse(String response) {
+        this.response = response;
+    }
+
+    public boolean getRunning() {
+        return this.running;
+    }
+
+    public void setRunning(boolean running) {
+        this.running = running;
+    }
+
+    public boolean getDebugMode() {
+        return debugMode;
+    }
+
+    public void setDebugMode(boolean debugMode) {
+        this.debugMode = debugMode;
+    }
+
+    public String getScript() {
+        return script;
+    }
+
+    public void setScript(String script) {
+        this.script = script;
+    }
+    //endregion getters and setters
+
+    /**
+     * read eval print loop, to process and respond to user input
+     */
     public void repl() {
+
+        //display chosen script
+        scriptMsg();
+        //display the welcome message
+        welcomeMsg();
 
         //scanner to read user input
         Scanner scanner = new Scanner(System.in);
 
-        //this chunk of code gets the user to choose a script, if the user doesn't input the correct thing then it
-        //displays an error message and loops until they do
-        System.out.println("What version of Eliza would you like to speak to today, enter 1 for therapist or " +
-                "2 for tech support");
-        boolean validAnswer = false;
-        while (!validAnswer) {
-            switch (scanner.nextLine()) {
-                case "1":
-                    this.script = "therapist";
-                    validAnswer = true;
-                    break;
-                case "2":
-                    this.script = "tech support";
-                    validAnswer = true;
-                    break;
-                default:
-                    System.out.println("Invalid answer, Please only enter \"1\" or \"2\" ");
-            }
-
+        while (this.running) {
+            //get the user's input from the terminal
+            setUserInput(scanner.nextLine().toLowerCase());
+            //process the input, find a response, and print the response.
+            processAndPrintResponse();
         }
-
-        //chosen script message
-        System.out.println("You have chosen the " + this.script + " version of Eliza \n");
-
-        // Welcome message
-        System.out.println(">> Hi, I'm Eliza! What's your problem today?");
-
-        while (this.is_running) {
-            // takes in the user's input and sets it to lower case, removes all non letter
-            // characters and replaces double space with single space
-            String input = scanner.nextLine().toLowerCase();
-            input = preprocess(input).replaceAll("[^a-zA-Z ]", "")
-                    .replaceAll(" {2}", " ");
-            // user's input as an array of words
-            String[] tokens = input.split(" ");
-
-            // try and find keywords in the user's input
-            JSONObject keywordObj = findKeywordObject(input);
-
-            // if there are no keywords in the user's input
-            if (keywordObj == null) {
-                // call the no keywords method and print the output
-                System.out.println(">> " + noKeywords(tokens));
-            } else { // if there is a keyword in the input
-
-                //find their keyword as a string
-                String chosenKeyword = "";
-                for (Object keyword : (JSONArray) keywordObj.get("keyword")) {
-                    if (input.contains((String) keyword)) {
-                        chosenKeyword = (String) keyword;
-                    }
-                }
-
-                // get the object of the best matching decomposition.
-                JSONObject bestDecomp = findDecomposition(keywordObj, input, chosenKeyword);
-                // and then pass it in to the choose recomposition method so a recomposition can
-                // be chosen and printed
-
-                String response = chooseRecomposition(bestDecomp, tokens, chosenKeyword);
-                System.out.println(">> " + response);
-
-                if(response.equals("Goodbye!")){
-                    this.is_running = false;
-                }
-            }
-
-        }
-        // close the scanner
+        //close the scanner
         scanner.close();
     }
 
+    /**
+     * displays the chosen script
+     */
+    public void scriptMsg() {
+        if (!fromGUI) {
+            setResponse("You have chosen the " + script + " version of Eliza \n");
+            System.out.println(response);
+        } else {
+            setResponse("Script: " + script);
+        }
+    }
 
+    /**
+     * displays the relevant welcome message for each script
+     */
+    public void welcomeMsg() {
+        switch (script) {
+            case "therapist":
+                setResponse("Hi, I'm Eliza! What's your problem today?");
+                break;
+            case "tech support":
+                setResponse("Hi, I'm Eliza! What can I help you with?");
+                break;
+            case "shakespeare":
+                setResponse("Greetings");
+                break;
+        }
+        if (!fromGUI) {
+            System.out.println(">> " + response);
+        }
+    }
+
+    /**
+     * method processes the user's input, finds a response and then prints the response
+     */
+    public void processAndPrintResponse() {
+
+        // takes the user's input and sets it to lower case, removes all apostrophes not caught by preprocessing,
+        // and replaces all non letter characters with a space
+        setUserInput(preprocess(getUserInput()).replaceAll("'", "")
+                .replaceAll("[^A-Za-z0-9]", " "));
+        // user's input as an array of words
+        String[] tokens = getUserInput().split(" ");
+
+        // creating an array of keyword objects
+        JSONObject allJson = (JSONObject) readInJson();
+        JSONArray keywords = (JSONArray) allJson.get("keywords");
+
+        // try and find keywords in the user's input
+        JSONObject keywordObj = findKeywordObject(tokens, keywords);
+
+        //find their keyword as a string
+        String chosenKeyword = "";
+        for (Object keyword : (JSONArray) keywordObj.get("keyword")) {
+            for (String curWord : tokens) {
+
+                if (curWord.equals(keyword)) {
+                    chosenKeyword = (String) keyword;
+                    break;
+                }
+            }
+        }
+
+        // get the object of the best matching decomposition.
+        JSONObject bestDecomp = findDecomposition(keywordObj, getUserInput(), chosenKeyword);
+
+
+        // and then pass it in to the choose recomposition method so a recomposition can
+        // be chosen and printed
+        setResponse(chooseRecomposition(bestDecomp, tokens, chosenKeyword));
+
+        if (!fromGUI) {
+            System.out.println(">> " + response);
+
+            //if the keyword is at the second last entry of the keywords array. i.e. it is a "bye" word
+            //then running is set to false so the repl loop terminates and the program stops
+            if (keywords.indexOf(keywordObj) == keywords.size() - 2)
+                this.running = false;
+        }
+
+    }
+
+    /**
+     * pre-processes the user's input to remove contractions
+     *
+     * @param str user's input
+     * @return user's input after processing
+     */
     public String preprocess(String str) {
         Map<String, String> preprocessMap = new HashMap<>();
         preprocessMap.put("i'm", "i am");
@@ -119,8 +195,11 @@ public class Eliza {
         return str;
     }
 
-    // reads in a JSON script file storing the decompositon and recomposition rules
-    // into an object and then return the object
+    /**
+     * reads in a JSON script file into an object and then returns the object
+     *
+     * @return object containing all the JSON data
+     */
     public Object readInJson() {
         try {
             FileReader reader = new FileReader(this.script + ".json");
@@ -131,6 +210,12 @@ public class Eliza {
         return new Object();
     }
 
+    /**
+     * converts input to second person
+     *
+     * @param input user's input split into array of words
+     * @return input in second person
+     */
     public String secondPerson(String[] input) {
         // input: array
         Map<String, String> replacementMap = new HashMap<>();
@@ -158,25 +243,17 @@ public class Eliza {
 
     }
 
-    public String noKeywords(String[] input) {
-        String result = secondPerson(input);
-        result = result + ("?");
-        String[] options = {"Could you explain that further?", "Would you like to go into more detail?",
-                result};
-
-        Random random = new Random();
-        int rand = random.nextInt(3);
-
-        return options[rand];
-    }
-
-    // returns highest priority keyword object included in the users input or
-    // returns a null object if the input contains no keywords
-    public JSONObject findKeywordObject(String input) {
-
-        // creating an array of keyword objects
-        JSONObject allJson = (JSONObject) readInJson();
-        JSONArray keywords = (JSONArray) allJson.get("keywords");
+    /**
+     * returns the highest priority keyword object included in the users input. A keyword object has a higher priority
+     * the earlier it appears in the array of keyword objects in the JSON script file.
+     * So the keywords for the object at index 0 have the highest priority, and the object at the end of the array
+     * (the default) has the lowest
+     *
+     * @param tokens   user's input split into array of words
+     * @param keywords JSON array of keyword objects
+     * @return chosen keyword object
+     */
+    public JSONObject findKeywordObject(String[] tokens, JSONArray keywords) {
 
         // adds a keyword object plus its priority to the map if any of it's keywords are included in the
         // user's string
@@ -185,9 +262,14 @@ public class Eliza {
         for (int k = 0; k < keywords.size(); k++) {
             JSONObject keywordObj = (JSONObject) keywords.get(k);
 
-            for (Object keyword :(JSONArray) keywordObj.get("keyword")) {
-                if (input.contains((String) keyword) && !(wordPriority.containsKey(keywordObj))){
-                    wordPriority.put(keywordObj, k);
+            for (Object keyword : (JSONArray) keywordObj.get("keyword")) {
+
+                for (String curWord : tokens) {
+
+                    if (curWord.equals(keyword) && !(wordPriority.containsKey(keywordObj))) {
+                        wordPriority.put(keywordObj, k);
+                    }
+
                 }
             }
         }
@@ -206,13 +288,24 @@ public class Eliza {
             }
         }
 
-        // will return null if none of the keywords are present in the input string
-        return highestPriorityKeyword;
+        //if none of the keywords have been matched, return the last default null object
+        if (highestPriorityKeyword == null) {
+            return (JSONObject) keywords.get(keywords.size() - 1);
+        } else
+            //else return the highest priority keyword object
+            return highestPriorityKeyword;
 
     }
 
-    // finds the best matching decomposition for a keyword using the input and
-    // returns it (the longer the decompositon matched, the better the match is)
+    /**
+     * finds the best matching decomposition for a keyword using the input and
+     * returns it (the longer the decompositon matched, the better the match is)
+     *
+     * @param keywordObj    the chosen keyword object
+     * @param input         the user's input
+     * @param chosenKeyword the chosen keyword as a string
+     * @return decomposition object
+     */
     public JSONObject findDecomposition(JSONObject keywordObj, String input, String chosenKeyword) {
 
         // get the array of all decomposition rules for a keyword
@@ -237,15 +330,21 @@ public class Eliza {
                 longestDecomp = decomposition;
             }
         }
-
-        System.out.println("\n FOR DEBUGGING - decomposition rule chosen is: " + longestDecomp + "\n");
+        if (debugMode)
+            System.out.println("\n FOR DEBUGGING - decomposition rule chosen is: " + longestDecomp + "\n");
         // return the object of the best matching decomposition rule
         return longestDecompObj;
 
     }
 
-    // given a decompositon rule, choose a recomposition rule at random and then
-    // return it to be printed
+    /**
+     * given a decompositon rule, choose a recomposition rule at random and then return it to be printed
+     *
+     * @param matchingDecomp the matching decomposition object
+     * @param words          the user's input as an array of words
+     * @param chosenKeyword  the chosen keyword as a string
+     * @return a recomposition to be printed
+     */
     public String chooseRecomposition(JSONObject matchingDecomp, String[] words, String chosenKeyword) {
         // getting an array of recompositions
         JSONArray recompositions = (JSONArray) matchingDecomp.get("Recompositions");
@@ -263,20 +362,28 @@ public class Eliza {
         //if the recomposition that is chosen contains a wildcard
         if (recomposition.contains("*")) {
             //then call the substituteWildcard method
-            recomposition = substituteWildcard(recomposition, words, matchingDecomp);
+            recomposition = substituteWildcard(recomposition, words, matchingDecomp, chosenKeyword);
         }
 
         return recomposition;
 
     }
 
-    //method substitutes the wildcard (*) at either the start or the end of the decomposition rule with the
-    //relevant text that the user input
-    public String substituteWildcard(String recomposition, String[] words, JSONObject matchingDecomp) {
+    /**
+     * method substitutes the wildcard (*) at either the start or the end of the decomposition rule with the
+     * relevant text that the user input
+     *
+     * @param recomposition  a recomposition string
+     * @param words          the user's input as an array of words
+     * @param matchingDecomp the matching decomp object
+     * @param chosenKeyword  the chosen keyword as a string
+     * @return recomposition to be printed
+     */
+    public String substituteWildcard(String recomposition, String[] words, JSONObject matchingDecomp, String chosenKeyword) {
 
         //get the decomposition rule and split it into an array of words
         String decompRule = (String) matchingDecomp.get("Rule");
-        String[] decompArray = decompRule.split(" ");
+        String[] decompArray = decompRule.replaceAll(Pattern.quote("$"), chosenKeyword).split(" ");
 
         //replacement string will hold the words that are being put in place of the wildcard in the recomposition rule
         StringBuilder replacement = new StringBuilder();
