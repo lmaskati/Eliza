@@ -248,9 +248,25 @@
     },
     {
       "keyword": [
+        "hello",
+        "hi",
+        "hiya",
+        "hey"
+      ],
+      "Decompositions": [
+        {
+          "Rule": "$",
+          "Recompositions": [
+            "Good day, how dost thou?"
+          ]
+        }
+      ]
+    },
+    {
+      "keyword": [
         "bye",
         "goodbye",
-        "see you later",
+        "cya",
         "exit",
         "farewell"
       ],
