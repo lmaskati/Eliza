@@ -1,3 +1,11 @@
+To run the program directly from our runnable jar files use one of the following commands:
+
+java -jar ElizaTerminal.jar (this runs Eliza via the terminal)
+java -jar ElizaGUI.jar (this runs Eliza via a GUI)
+
+
+Alternatively compile and run the source code like this:
+
 WINDOWS
 
 	To compile:
