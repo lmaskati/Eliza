@@ -4,27 +4,33 @@ import java.util.ArrayList;
 
 public class GUI {
 
+    //colour scheme for the GUI
     Color colourA = new Color(38, 70, 83);
     Color colourB = new Color(42, 157, 143);
     Color colourC = new Color(233, 196, 106);
     Color colourD = new Color(244, 162, 97);
     Color colourE = new Color(231, 111, 81);
 
+    //frame and panels
     JFrame menuFrame = setupFrame(800, 800, "Eliza");
     JPanel menuGUI = setupPanel(colourA, 0, 0, 800, 800);
     JPanel chatGUI = setupPanel(colourA, 0, 0, 800, 800);
+
+    //creating a new engine object
     Engine engine = new Engine(true);
 
+    //all the variables needed to hold responses / inputs and then display these
     ArrayList<String> responseList = new ArrayList<>();
     ArrayList<String> inputList = new ArrayList<>();
-
     JLabel[] responseLabels = new JLabel[10];
     JLabel[] inputLabels = new JLabel[10];
-
     JPanel responsechatLog = setupGridPanel(Color.white, 50, 125, 350, 575, 10, 1);
     JPanel inputchatLog = setupGridPanel(Color.white, 400, 125, 350, 575, 10, 1);
 
 
+    /**
+     * creates and sets up every GUI element, ready to be displayed / manipulated.
+     */
     public void createGUI() {
 
         JPanel titleMenuPanel = setupGridPanel(colourA, 100, 100, 600, 100, 1, 3);
@@ -105,9 +111,7 @@ public class GUI {
         debugBtnPanel.add(debuggingOnBtn);
         debugBtnPanel.add(debuggingOffBtn);
 
-
         speakBtnPanel.add(speakBtn);
-
 
         menuGUI.add(titleMenuPanel);
         menuGUI.add(buttonPanel);
@@ -139,15 +143,13 @@ public class GUI {
         JTextField inputField = new JTextField();
 
         JButton sendBtn = setupJButton(colourC, "Send", colourE, 12, true);
+
+        //when the "send" button is clicked
         sendBtn.addActionListener(e -> {
-            engine.setUserInput(inputField.getText().toLowerCase());
-            inputList.add(inputField.getText());
-            inputList.add("");
-            inputList.add("");
-            engine.processAndPrintResponse();
-            responseList.add(engine.getResponse());
-            responseList.add("");
-            updateLog();
+            //call the send message method and pass in the text currently inside the input box
+            sendMsg(inputField.getText());
+            //clears the input field
+            inputField.setText("");
         });
 
 
@@ -157,7 +159,7 @@ public class GUI {
         chatGUI.add(returnBtnPanel);
         chatGUI.add(titleChatPanel);
 
-
+        //fill the labels array with empty labels.
         for (int c = 0; c < 10; c++) {
             responseLabels[c] = setupJLabel(Color.white, Color.red, "", 15, 2);
             responsechatLog.add(responseLabels[c]);
@@ -172,6 +174,120 @@ public class GUI {
 
     }
 
+    /**
+     * called when the user clicks the "Speak to Eliza button"
+     */
+    public void startChat() {
+        //the log is cleared
+        responseList.clear();
+        inputList.clear();
+        //the log lists are filled with empty strings
+        for (int c = 0; c < 10; c++) {
+            responseList.add("");
+            inputList.add("");
+        }
+        //call the method to show the chat page
+        showChat();
+        //start the engine running and call the script message
+        engine.setRunning(true);
+        engine.scriptMsg();
+        //add this script message to the response list and a blank space
+        responseList.add(engine.getResponse());
+        responseList.add("");
+        //same again with the welcome message
+        engine.welcomeMsg();
+        responseList.add(engine.getResponse());
+        responseList.add("");
+        //call the update log method to update the chat log
+        updateLog();
+    }
+
+    /**
+     * hides chat, shows menu
+     */
+    public void showMenu() {
+        //make the chat page invisible and the menu page visible
+        menuFrame.setVisible(false);
+        menuFrame.remove(chatGUI);
+        menuFrame.add(menuGUI);
+        menuFrame.setVisible(true);
+    }
+
+    /**
+     * hides menu, shows chat
+     */
+    public void showChat() {
+        //make the menu page invisible and the chat page visible
+        menuFrame.setVisible(false);
+        menuFrame.remove(menuGUI);
+        menuFrame.add(chatGUI);
+        menuFrame.setVisible(true);
+    }
+
+    /**
+     * method gets called every time there is a new message and the chat log needs updating
+     */
+    public void updateLog() {
+        //fills the log with the 10 most recent responses and inputs
+        for (int c = 2; c < 11; c++) {
+            String responseText = responseList.get(responseList.size() - (c - 1));
+            String inputText = inputList.get(inputList.size() - (c - 1));
+            responseLabels[11 - c].setText(responseText);
+            inputLabels[11 - c].setText(inputText);
+
+            //sets the font for each message dynamically based on the length of the message. calls the calcLogtxtSize method to do this
+            responseLabels[11 - c].setFont(new Font("Arial", Font.PLAIN, calcLogtxtSize(responseText.length() / 10)));
+            inputLabels[11 - c].setFont(new Font("Arial", Font.PLAIN, calcLogtxtSize(inputText.length() / 10)));
+        }
+    }
+
+    /**
+     * method gets called after the user clicks the send button, it sends the input to the engine to be processed and then gets the response to be printed
+     *
+     * @param inputTxt text in the input box
+     */
+    public void sendMsg(String inputTxt) {
+        //sets the user input field in the engine class to the input
+        engine.setUserInput(inputTxt.toLowerCase());
+        //adds this input to the list of inputs along with 2 blanks
+        inputList.add(inputTxt);
+        inputList.add("");
+        inputList.add("");
+        //call the method to process this input and get a response from engine
+        engine.processAndPrintResponse();
+        //add this response to the list along with a blank
+        responseList.add(engine.getResponse());
+        responseList.add("");
+        //update the chat log
+        updateLog();
+    }
+
+
+    /**
+     * method takes in a length of a string and then returns 1 of 3 font sizes that would be suitable. so the text can fit in the log
+     *
+     * @param strLen a message character length
+     * @return a font size
+     */
+    public int calcLogtxtSize(int strLen) {
+        int txtSize;
+        switch (strLen) {
+            case 0:
+            case 1:
+            case 2:
+                txtSize = 25;
+                break;
+            case 3:
+            case 4:
+                txtSize = 15;
+                break;
+            default:
+                txtSize = 10;
+        }
+        return txtSize;
+    }
+
+    //region constructors for GUI elements
     private JFrame setupFrame(int WIDTH, int HEIGHT, String name) {
         JFrame frame = new JFrame();
         frame.setTitle(name);
@@ -228,67 +344,6 @@ public class GUI {
         return button;
 
     }
+    //endregion
 
-    public void startChat() {
-        responseList.clear();
-        inputList.clear();
-        for (int c = 0; c < 10; c++) {
-            responseList.add("");
-            inputList.add("");
-        }
-        showChat();
-        engine.setRunning(true);
-        engine.scriptMsg();
-        responseList.add(engine.getResponse());
-        responseList.add("");
-        engine.welcomeMsg();
-        responseList.add(engine.getResponse());
-        responseList.add("");
-        updateLog();
-    }
-
-    public void showMenu() {
-        menuFrame.setVisible(false);
-        menuFrame.remove(chatGUI);
-        menuFrame.add(menuGUI);
-        menuFrame.setVisible(true);
-    }
-
-    public void showChat() {
-        menuFrame.setVisible(false);
-        menuFrame.remove(menuGUI);
-        menuFrame.add(chatGUI);
-        menuFrame.setVisible(true);
-    }
-
-    public void updateLog() {
-        for (int c = 2; c < 11; c++) {
-            String responseText = responseList.get(responseList.size() - (c - 1));
-            String inputText = inputList.get(inputList.size() - (c - 1));
-            responseLabels[11 - c].setText(responseText);
-            inputLabels[11 - c].setText(inputText);
-
-            responseLabels[11 - c].setFont(new Font("Arial", Font.PLAIN, calcLogtxtSize(responseText.length() / 10)));
-            inputLabels[11 - c].setFont(new Font("Arial", Font.PLAIN, calcLogtxtSize(inputText.length() / 10)));
-        }
-    }
-    
-
-    public int calcLogtxtSize(int strLen) {
-        int txtSize;
-        switch (strLen) {
-            case 0:
-            case 1:
-            case 2:
-                txtSize = 25;
-                break;
-            case 3:
-            case 4:
-                txtSize = 15;
-                break;
-            default:
-                txtSize = 10;
-        }
-        return txtSize;
-    }
 }
