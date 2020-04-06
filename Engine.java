@@ -1,7 +1,6 @@
 import java.io.*;
 import java.util.*;
 import java.util.regex.*;
-
 import org.json.simple.*;
 import org.json.simple.parser.*;
 
@@ -13,7 +12,11 @@ public class Engine {
     public String response = "";
     public String userInput = "";
 
-    //constructor that takes in a true or false depending if it is being called from the GUI or not
+    /**
+     * constructor that takes in a true or false depending if it is being called from the GUI or not
+     *
+     * @param fromGUI boolean value, whether or not the object is being made from the terminal or GUI
+     */
     public Engine(boolean fromGUI) {
         this.fromGUI = fromGUI;
     }
@@ -60,7 +63,9 @@ public class Engine {
     }
     //endregion getters and setters
 
-    // read eval print loop, to process and respond to user input
+    /**
+     * read eval print loop, to process and respond to user input
+     */
     public void repl() {
 
         //display chosen script
@@ -81,47 +86,47 @@ public class Engine {
         scanner.close();
     }
 
-    //displays the chosen script
+    /**
+     * displays the chosen script
+     */
     public void scriptMsg() {
         if (!fromGUI) {
-            setResponse("You have chosen the " + this.script + " version of Eliza \n");
-            System.out.println(getResponse());
+            setResponse("You have chosen the " + script + " version of Eliza \n");
+            System.out.println(response);
         } else {
-            setResponse("Script: " + this.script);
+            setResponse("Script: " + script);
         }
     }
 
-    //displays the welcome message
+    /**
+     * displays the relevant welcome message for each script
+     */
     public void welcomeMsg() {
-        if (this.script.equals("shakespeare")) {
-            if (!fromGUI) {
-                setResponse(">> Greetings");
-                System.out.println(getResponse());
-            } else {
-                setResponse("Greetings");
-            }
-        } else if (this.script.equals("tech support")) {
-            if (!fromGUI) {
-                setResponse(">> Hi, I'm Eliza! What can I help you with?");
-                System.out.println(getResponse());
-            } else {
-                setResponse("Hi, I'm Eliza! What can I help you with?");
-            }
-        } else {
-            if (!fromGUI) {
-                setResponse(">> Hi, I'm Eliza! What's your problem today?");
-                System.out.println(getResponse());
-            } else {
+        switch (script) {
+            case "therapist":
                 setResponse("Hi, I'm Eliza! What's your problem today?");
-            }
+                break;
+            case "tech support":
+                setResponse("Hi, I'm Eliza! What can I help you with?");
+                break;
+            case "shakespeare":
+                setResponse("Greetings");
+                break;
+        }
+        if (!fromGUI) {
+            System.out.println(">> " + response);
         }
     }
 
-    //method processes the user's input, finds a response and then prints the response
+    /**
+     * method processes the user's input, finds a response and then prints the response
+     */
     public void processAndPrintResponse() {
 
-        // takes the user's input and sets it to lower case, removes all non letter characters
-        setUserInput(preprocess(getUserInput()).replaceAll("[^A-Za-z0-9]", " "));
+        // takes the user's input and sets it to lower case, removes all apostrophes not caught by preprocessing,
+        // and replaces all non letter characters with a space
+        setUserInput(preprocess(getUserInput()).replaceAll("'", "")
+                .replaceAll("[^A-Za-z0-9]", " "));
         // user's input as an array of words
         String[] tokens = getUserInput().split(" ");
 
@@ -163,6 +168,12 @@ public class Engine {
 
     }
 
+    /**
+     * pre-processes the user's input to remove contractions
+     *
+     * @param str user's input
+     * @return user's input after processing
+     */
     public String preprocess(String str) {
         Map<String, String> preprocessMap = new HashMap<>();
         preprocessMap.put("i'm", "i am");
@@ -184,7 +195,11 @@ public class Engine {
         return str;
     }
 
-    // reads in a JSON script file into an object and then returns the object
+    /**
+     * reads in a JSON script file into an object and then returns the object
+     *
+     * @return object containing all the JSON data
+     */
     public Object readInJson() {
         try {
             FileReader reader = new FileReader(this.script + ".json");
@@ -195,6 +210,12 @@ public class Engine {
         return new Object();
     }
 
+    /**
+     * converts input to second person
+     *
+     * @param input user's input split into array of words
+     * @return input in second person
+     */
     public String secondPerson(String[] input) {
         // input: array
         Map<String, String> replacementMap = new HashMap<>();
@@ -222,10 +243,16 @@ public class Engine {
 
     }
 
-    // returns the highest priority keyword object included in the users input. A keyword object has a higher priority
-    // the earlier it appears in the array of keyword objects in the JSON script file.
-    // So the keywords for the object at index 0 have the highest priority, and the object at the end of the array
-    // (the default) has the lowest
+    /**
+     * returns the highest priority keyword object included in the users input. A keyword object has a higher priority
+     * the earlier it appears in the array of keyword objects in the JSON script file.
+     * So the keywords for the object at index 0 have the highest priority, and the object at the end of the array
+     * (the default) has the lowest
+     *
+     * @param tokens   user's input split into array of words
+     * @param keywords JSON array of keyword objects
+     * @return chosen keyword object
+     */
     public JSONObject findKeywordObject(String[] tokens, JSONArray keywords) {
 
         // adds a keyword object plus its priority to the map if any of it's keywords are included in the
@@ -270,8 +297,15 @@ public class Engine {
 
     }
 
-    // finds the best matching decomposition for a keyword using the input and
-    // returns it (the longer the decompositon matched, the better the match is)
+    /**
+     * finds the best matching decomposition for a keyword using the input and
+     * returns it (the longer the decompositon matched, the better the match is)
+     *
+     * @param keywordObj    the chosen keyword object
+     * @param input         the user's input
+     * @param chosenKeyword the chosen keyword as a string
+     * @return decomposition object
+     */
     public JSONObject findDecomposition(JSONObject keywordObj, String input, String chosenKeyword) {
 
         // get the array of all decomposition rules for a keyword
@@ -303,8 +337,14 @@ public class Engine {
 
     }
 
-    // given a decompositon rule, choose a recomposition rule at random and then
-    // return it to be printed
+    /**
+     * given a decompositon rule, choose a recomposition rule at random and then return it to be printed
+     *
+     * @param matchingDecomp the matching decomposition object
+     * @param words          the user's input as an array of words
+     * @param chosenKeyword  the chosen keyword as a string
+     * @return a recomposition to be printed
+     */
     public String chooseRecomposition(JSONObject matchingDecomp, String[] words, String chosenKeyword) {
         // getting an array of recompositions
         JSONArray recompositions = (JSONArray) matchingDecomp.get("Recompositions");
@@ -329,8 +369,16 @@ public class Engine {
 
     }
 
-    //method substitutes the wildcard (*) at either the start or the end of the decomposition rule with the
-    //relevant text that the user input
+    /**
+     * method substitutes the wildcard (*) at either the start or the end of the decomposition rule with the
+     * relevant text that the user input
+     *
+     * @param recomposition  a recomposition string
+     * @param words          the user's input as an array of words
+     * @param matchingDecomp the matching decomp object
+     * @param chosenKeyword  the chosen keyword as a string
+     * @return recomposition to be printed
+     */
     public String substituteWildcard(String recomposition, String[] words, JSONObject matchingDecomp, String chosenKeyword) {
 
         //get the decomposition rule and split it into an array of words
